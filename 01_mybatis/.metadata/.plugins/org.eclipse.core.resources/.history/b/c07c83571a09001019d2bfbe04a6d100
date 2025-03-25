@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	* DOCTYPE : 문서유형, 설정된 값으로 전체를 감싸는 태그 구성 
+	* DTD : 유효성 검사	
+-->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- configuration : 환경 설정 -->
+<configuration>
+  <!-- environments : mybatis에서 연동할 DB정보를 작성하는 영역 -->
+  <environments default="">
+  <!-- default 속성 : 여러 개의 설정 중 기본 값에 대한 설정 -->
+  
+  		<!-- environment : DB 정보 설정 -->
+  		<environment id="develop">
+  			
+  		</environment>
+  </environments>
+</configuration>

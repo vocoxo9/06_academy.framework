@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mybatis project</title>
+</head>
+<body>
+	<h1>Hello, Mybatis</h1>
+	<%-- 
+		* 프레임워크(Framework)
+			- 개발자가 보다 편리한 환경에서 개발할 수 있도록 제공하는 틀, 뼈대
+			- 소프트 웨어 개발 시 공통적으로 사용되는 라이브러리, 개발도구, 인터페이스 등 의미
+	 --%>
+</body>
+</html>

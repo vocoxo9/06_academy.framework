@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+	<!-- 
+		DML(insert, update, delete) 작성
+		<insert|update|delete id="sql문 식별자">
+			실행할 SQL문
+		</insert|update|delete>
+	 -->
+</mapper>

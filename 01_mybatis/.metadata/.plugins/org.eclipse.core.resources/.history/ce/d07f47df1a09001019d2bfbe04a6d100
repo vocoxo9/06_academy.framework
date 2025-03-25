@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	* DOCTYPE : 문서유형, 설정된 값으로 전체를 감싸는 태그 구성 
+	* DTD : 유효성 검사	
+-->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- configuration : 환경 설정 -->
+<configuration>
+  <!-- environments : mybatis에서 연동할 DB정보를 작성하는 영역 -->
+  <environments default="develop">
+  <!-- default 속성 : 여러 개의 설정 중 기본 값에 대한 설정 -->
+  
+  		<!-- environment : DB 정보 설정 -->
+  		<environment id="develop">
+  			<!-- 
+  				transactionManager : 트랜잭션 처리에 대한 설정
+  				* type 속성 : JDBC | MANAGED
+  					- JDBC : 트랜잭션 처리를 직접 관리(수동 commit)
+  					- MANAGED : 트랜잭션 처리에 관여하지 않겠다(자동 commit)
+  			 -->
+  			<transactionManager type="JDBC"/>
+  			
+  			<!-- dataSource : DB 정보를 하위요소로 가지는 설정 부분
+  							  ConnectionPool 사용 여부 설정		
+  			 -->
+  			<dataSource type="POOLED">
+  			
+  			</dataSource>
+  		</environment>
+  </environments>
+</configuration>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	* DOCTYPE : 문서유형, 설정된 값으로 전체를 감싸는 태그 구성 
+	* DTD : 유효성 검사	
+-->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- configuration : 환경 설정 -->
+<configuration>
+	<!-- * 설정 관련 순서가 있음 * -->
+	
+	  <!--  settings : mybatis 구동 시 선언할 설정들을 작성하는 영역 -->
+  <settings>
+  	<setting name="jdbcTypeForNull" value="NULL"/>
+  	<!--  데이터가 null값으로 전달되었을 때, 빈값이 아닌 null로 설정 -->
+  </settings>
+  
+  <!-- 
+  		typeAliases : vo, dto 객체들의 전체 클래스명을 단순한 클래스명으로 사용하기 위해
+  				  별칭을 등록할 수 있는 영역
+  		* type 속성 : 전체 클래스명
+  		* alias 속성: 별칭(단순한 클래스명)
+   -->
+   <typeAliases>
+   </typeAliases>
+
+  <!-- environments : mybatis에서 연동할 DB정보를 작성하는 영역 -->
+  <environments default="develop">
+  <!-- default 속성 : 여러 개의 설정 중 기본 값에 대한 설정 -->
+  
+  		<!-- environment : DB 정보 설정 -->
+  		<environment id="develop">
+  			<!-- 
+  				transactionManager : 트랜잭션 처리에 대한 설정
+  				* type 속성 : JDBC | MANAGED
+  					- JDBC : 트랜잭션 처리를 직접 관리(수동 commit)
+  					- MANAGED : 트랜잭션 처리에 관여하지 않겠다(자동 commit)
+  			 -->
+  			<transactionManager type="JDBC"/>
+  			
+  			<!-- dataSource : DB 정보를 하위요소로 가지는 설정 부분
+  							  ConnectionPool 사용 여부 설정
+  				 * type : POOLED | UNPOOLED
+  				 - POOLED : ConnectionPool 사용
+  				 - UNPOOLED : ConnectionPool 사용하지 않음
+  				 => ConnectionPool? Connection 객체를 보관할 수 있는 영역
+  				 					한번 생성된 Connection 객체를 담아두고 재사용		
+  			 -->
+  			<dataSource type="POOLED">
+  				<property name="driver" value="oracle.jdbc.driver.OracleDriver"></property>
+  				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+  				<property name="username" value="C##MYBATIS"/>
+  				<property name="password" value="MYBATIS"/>
+   			</dataSource>
+  		</environment>
+  </environments>
+  
+   
+   <!-- 
+   		mappers : 실행할 sql문을 저장한 매퍼(mapper)파일들을 등록하는 영역
+   		* resource 속성 : mapper 파일의 경로
+    -->
+    <mappers>
+    </mappers>
+</configuration>

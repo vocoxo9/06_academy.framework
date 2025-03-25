@@ -1,0 +1,27 @@
+package com.kh.mybatis.template;
+
+import org.apache.ibatis.session.SqlSession;
+
+public class Template {
+	/*
+	 * 기존 JDBC
+	 * public static Connection getConnection(){
+	 * 		// driver.properties 파일을 읽어
+	 * 		// 해당 DB와 접속된 Connection 객체 생성 후 반환
+	 * }
+	 * 
+	 * public static void close(JDBC 객체){
+	 * 		// 전달받은 객체를 반납(close)
+	 * }
+	 * 
+	 * public static void commit|rollback(Connection 객체){
+	 * 		// 트랜잭션 처리
+	 * }
+	 */
+	
+	/* 마이바티스 (Mybatis) */
+	public static SqlSession getSqlSession() {
+		// mybatis.config.xml 파일을 읽어서
+		// 해당 DB와 접속된 SqlSession 객체 생성 후 반환
+	}
+}
