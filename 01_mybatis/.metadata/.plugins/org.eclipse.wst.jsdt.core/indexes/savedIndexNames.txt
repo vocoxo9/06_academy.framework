@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\workspace\06_framework\01_mybatis\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2393913097.index
-418617947.index
-3313560915.index
-3610756127.index
-3393219842.index
-457160413.index
-294955800.index
