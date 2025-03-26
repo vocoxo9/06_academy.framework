@@ -34,7 +34,7 @@
 				</tr>
 				<tr>
 					<td>* 비밀번호 확인</td>
-					<td><input type="password" class="form-control" required></td>
+					<td><input type="password" class="form-control" id="userPwdCheck" required></td>
 				</tr>
 				<tr>
 					<td>* 이름</td>
@@ -49,20 +49,27 @@
 					<td>
 						<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="gender" value="M" id="genderM" checked>
-						<label class="form-check-label" for="genderM">남</label>
+						<label class="form-check-label" for="genderM">남자</label>
 					  </div>
 					  <div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="gender" value="F" id="genderF">
-						<label class="form-check-label" for="genderF">여</label>
+						<label class="form-check-label" for="genderF">여자</label>
 					  </div></td>
 				</tr>
 				<tr>
 					<td>&nbsp;&nbsp;생년월일</td>
-					<td><input type="date" class="form-control" name="birthDate"></td>
+					<td>
+						<!-- onchange makeBirth라는 메소드 발생하게 하여 hidden type에 name 속성 부여 -->
+						<input type="date" class="form-control" onchange="makeBirth(this)">
+						<input type="hidden" name="birthday">
+					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;&nbsp;연락처</td>
-					<td><input type="tel" class="form-control" name="phone" placeholder="- 포함해서 입력"></td>
+					<td>
+						<input type="tel" class="form-control" name="phone" 
+						pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="- 포함해서 입력">
+					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;&nbsp;주소</td>
@@ -70,13 +77,71 @@
 				</tr>
 			</table>
 				<br><br>
-			<table>
-				<tr>
-					<td><button type="submit" class="btn btn-primary">회원가입</button></td>
+			<div align="center">
+					<td><button type="submit" class="btn btn-primary" onclick="return pwdCheck();">회원가입</button></td>
 					<td><button type="reset" class="btn btn-secondary">초기화</button></td>
-				</tr>
-			</table>
+			</div>
 		</form>
 	</div>
+
+	<script>
+		// 날짜 데이터의 형식을 DB형식에 맞게 변경하여 저장
+		function makeBirth(target){
+			// 입력된 값 가져오기
+			const data = target.value;
+			// document.querySelector("선택자");
+			// document.getElementById("아이디값");
+			console.log(data);
+
+			// yyyy-mm-dd 형식에서 yymmdd 형식으로 변경
+			// (1) Date 객체 사용
+			const birth = new Date(data);
+			console.log(birth);
+			let yy = birth.getFullYear() % 100;
+			let mm = ("0" + (birth.getMonth() + 1)).slice(-2);
+			let dd = ("0" + birth.getDate()).slice(-2);
+			console.log(yy, mm, dd);
+			console.log(mm);
+			console.log(dd);
+
+			// (2)String 객체 메소드 사용 => split 메소드
+			const dArr = data.split('-');	// ['yyyy','mm','dd']
+			yy = dArr[0].slice(-2);
+			mm = dArr[1];
+			dd = dArr[2];
+
+			console.log(yy, mm, dd);
+
+			// yy,mm,dd를 하나로 합쳐서
+			// name 속성이 birthday인 요소에 값을 저장
+			document.querySelector("#mem-enroll-area input[name=birthday]").value = yy+mm+dd;
+		}
+
+		/*
+		const makeBirth = (target) => {
+
+		}
+		*/
+		
+		// 입력된 '비밀번호'값과 '비밀번호 확인'값이 같을 경우 true, 다를 경우 false를 리턴
+		function pwdCheck(){
+			// 비밀번호 입력값 --> name=userPwd
+			// const pwd = document.getElementsByName("userPwd").value;
+			const pwd = document.querySelector("#mem-enroll-area input[name=userPwd]").value;
+			// 비밀번호 확인 입력값 --> id=userPwdCheck
+			const pwdCheck = document.getElementById("userPwdCheck").value;
+			
+			console.log(pwd, pwdCheck);
+			
+			// 두 값이 다를 경우 false를 리턴
+			if(pwd != pwdCheck){
+				alert("비밀번호와 비밀번호 확인 입력 값이 다릅니다.");
+				return false;				
+			} else{
+				return true;
+			}
+		}
+
+	</script>
 </body>
 </html>

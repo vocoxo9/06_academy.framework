@@ -38,6 +38,6 @@
 	 
 	 <%-- main.jsp 페이지로 포워딩 --%>
 	 <jsp:forward page="WEB-INF/views/main.jsp"/>
-	 <%-- <jsp:forward></jsp:forward> --%>
+	 <%-- <jsp:forward page="WEB-INF/views/main.jsp"></jsp:forward> --%>
 </body>
 </html>

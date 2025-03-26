@@ -43,6 +43,7 @@ public class MemberInsertController extends HttpServlet {
 		// => POST 요청인 경우 전달된 데이터에 한글이 포함되어 있을 수 있으므로 인코딩 처리 필요!
 		request.setCharacterEncoding("UTF-8");
 		
+		//   데이터 추출 메소드 : getParameter("키값"):String
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
@@ -71,7 +72,11 @@ public class MemberInsertController extends HttpServlet {
 		
 		// * 결과에 따라 페이지 구문
 		if(result > 0) {	// 회원가입 성공 --> 메인페이지 URL 재요청
-			response.sendRedirect(request.getContextPath());
+			// sessino 영역에 메시지 저장
+			request.getSession().setAttribute("alertMsg", "회원가입에 성공했습니다!");
+			
+			// response.sendRedirect("/mybatis");
+			response.sendRedirect(request.getContextPath());	// 해당 application의 context path로 요청 (웰컴파일->index.xx->main.jsp 포워딩 페이지
 		} else {	// 회원가입 실패 --> 에러페이지 포워딩
 			// * request 영역에 에러메시지 저장
 			request.setAttribute("errorMsg", "회원가입에 실패했습니다.");
