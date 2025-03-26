@@ -60,7 +60,7 @@ public class MemberUpdateController extends HttpServlet {
 		//			마이페이지로 url 재요청
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "수정 성공했습니다.");
-			response.sendRedirect("WEB-INF/views/member/myPage.jsp");
+			response.sendRedirect(request.getContextPath());
 		} else {
 			//			수정 실패 시, "수정 실패했습니다." 메시지 저장
 			//			에러페이지로 응답
