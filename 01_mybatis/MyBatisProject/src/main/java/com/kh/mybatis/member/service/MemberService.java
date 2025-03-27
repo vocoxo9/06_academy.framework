@@ -13,6 +13,11 @@ public interface MemberService {
 	int updateMember(Member m);
 	
 	/* 회원 탈퇴 -> 데이터 삭제(delete/update) */
-	int deleteMember(String userId);
+	int deleteMember(String userId, String userPwd);
+
+	/* 비밀번호 변경 */
+	int updatePassword(String userId, String userPwd, String newPwd);
 	
+	/* 아이디 중복체크 */
+	int countMemberByUserId(String userId);
 }

@@ -77,12 +77,82 @@
 				</tr>
 			</table>
 				<br><br>
+		
 			<div align="center">
 				<button type="submit" class="btn btn-sm btn-primary">정보 수정</button>
-				<button type="button" class="btn btn-sm btn-secondary">비밀번호 변경</button>
-				<button type="button" class="btn btn-sm btn-danger">회원 탈퇴</button>
+				<button type="button" class="btn btn-sm btn-secondary" 
+					data-bs-toggle="modal" data-bs-target="#updatePwdModal">비밀번호 변경</button>
+				<button type="button" class="btn btn-sm btn-danger" 
+					data-bs-toggle="modal" data-bs-target="#deleteMemModal">회원 탈퇴</button>
+			</div>
+		</form>	
+			<!-- 회원 탈퇴 모달 -->		
+			<div class="modal fade text-dark" id="deleteMemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel">회원 탈퇴</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <form action="delete.me" method="post">
+						<%-- 회원ID : 입력받지 x --%>
+						<input type="hidden" name="userId" value="${ loginUser.userId }" />
+						<p>
+							탈퇴 후 복구가 불가능합니다.<br>
+							그래도 탈퇴하시겠습니까?
+						</p>
+						<%-- 회원PWD : 입력 받기 --%>
+						<div class="mb-3">
+							<label for="password" class="col-form-label">비밀번호 : </label>
+							<input type="password" class="form-control" id="password" name="userPwd" required/>
+						</div>
+						
+						<button type="submit" class="btn btn-sm btn-danger float-end">탈퇴하기</button>
+			        </form>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 			
+			
+			<!-- 비밀번호 변경 모달 -->
+			<div class="modal fade text-dark" id="updatePwdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel">비밀번호 변경</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <form action="updatePwd.me" method="post">
+			        	<%--요청할 때 userId 값도 전달 --%> 
+			        	<input type="hidden" name="userId" value="${ loginUser.userId }" />
+						<div class="mb-3">
+							<label for="password" class="col-form-label">현재 비밀번호 : </label>
+							<input type="password" class="form-control" id="password" name="userPwd" required/>
+						</div>
+						<div class="mb-3">
+							<label for="newPwd" class="col-form-label">변경할 비밀번호 : </label>
+							<input type="password" class="form-control" id="newPwd" name="newPwd" required/>
+						</div>
+						<div class="mb-3">
+							<label for="newPwdCheck" class="col-form-label">변경할 비밀번호 확인 : </label>
+							<input type="password" class="form-control" id="newPwdCheck" required/>
+						</div>
+						
+						<button type="submit" class="btn btn-sm btn-secondary float-end" onclick="return pwdCheck();">비밀번호 변경하기</button>
+						<%-- 함수의 결과를 return 하고 결과에 따라 요청 --%>
+			        </form>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			
+			
+			
+			<!-- script -->
 			<script>
 				// 모든 요소들이 로드되었을 때 (화면에 표시되었을 때)
 				onload = function(){
@@ -126,8 +196,29 @@
 					document.querySelector("#mypage-area input[name=birthday]").value = yy+mm+dd;
 				
 				}
+				
+				function pwdCheck(){
+					// 변경할 비밀번호 값과 변경할 비밀번호 확인 값이 일치하지 않을 경우 변경 요청하지 않도록 처리
+					const newPwd = document.getElementById("newPwd").value;
+					// const newPwd = document.getquerySelector("#updatePwdModal #newPwd").value
+					const newPwdCheck = document.getElementById("newPwdCheck").value;
+					
+					// * 모두 입력되지 않았을 때도 요청하지 않도록 처리
+					
+					/* 
+						required 속성이 동작되어 해당 로직 필요 없을 수도...
+					const userPwd = document.querySelector("#updatePwdModal #password").value;
+					if( userPwd == "" || newPwd = "" || newPwdCheck =""){
+						alert("입력되지 않은 값이 있습니다. 확인해주세요.");
+						return false;
+					}
+					*/
+					if(newPwd != newPwdCheck){
+						alert("변경할 비밀번호 값이 다릅니다. 다시 확인해주세요.");
+						return false;
+					}
+				}
 			</script>
-		</form>
 	</div>
 
 </body>

@@ -10,6 +10,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <style>
 	#mem-enroll-area table{margin: auto;}
 </style>
@@ -26,7 +28,7 @@
 				<tr>
 					<td>* 아이디</td>
 					<td><input type="text" class="form-control" name="userId" maxlength="30" required></td>
-					<td><input type="button" class="btn btn-sm btn-outline-dark" value="중복체크"></td>
+					<td><input type="button" class="btn btn-sm btn-outline-dark" value="중복체크" onclick="idCheck();"></td>
 				</tr>
 				<tr>
 					<td>* 비밀번호</td>
@@ -127,6 +129,7 @@
 		function pwdCheck(){
 			// 비밀번호 입력값 --> name=userPwd
 			// const pwd = document.getElementsByName("userPwd").value;
+			// -- jQuery 방식 --> $("#mem-enroll-area input[name=userPwd]").val()
 			const pwd = document.querySelector("#mem-enroll-area input[name=userPwd]").value;
 			// 비밀번호 확인 입력값 --> id=userPwdCheck
 			const pwdCheck = document.getElementById("userPwdCheck").value;
@@ -141,7 +144,51 @@
 				return true;
 			}
 		}
-
+	
+		// 아이디 중복체크(비동기통신, ajax)
+		function idCheck(){
+			// [중복체크] 버튼 클릭 시 사용자가 입력한 아이디값을 전달하여 조회
+			// => 존재하는지 하지 않는지 여부를 확인 후 응답 데이터를 받을 것임
+			
+			// 입력된 아이디값 추출(jQuery)
+			const $userId = $("#mem-enroll-area input[name=userId]");
+			// console.log($userId, $userId.val());
+			console.log("**** ajax 요청 전 ****");
+			
+			//$.ajax(요청정보); 객체형태로 담아 호출
+			// *요청정보 : 객체(json) 형태, key/value 형태로 작성한다
+			/*
+				 - url : 요청 주소
+				 - type | method : 요청 방식 (get, post, ...)
+				 - data : 전달할 데이터(json) {키:데이터, 키:밸류, ...}
+				 
+				 - success : 요청(통신) 성공 시 처리할 내용(함수)
+				 - error   : 요청(통신) 실패 시 처리할 내용(함수)
+				 
+				 ---- 참고 ----
+				 - async : 서버와의 비동기 통신 처리 여부 (기본값: true)
+				 - contentType : 요청 시 데이터 인코딩 방식
+				 - dataType : 서버에서 응답 시 전달되는 데이터 형식 설정 
+				 			  (설정하지 않을 경우 자동으로 판단)
+				 	+ xml  : 트리 형태
+				 	+ json : 객체(Map 형식) --> 일반적인 데이터 구조
+				 	+ html : html 형식(태그)
+				 	+ text : 문자열데이터
+			*/
+			$.ajx({
+				url : 'idCheck',
+				data : {
+					userId : $userId.val()
+				},
+				type : 'get',		// 생략 가능
+				success : function(){
+					// 요청 성공 시
+				},
+				erorr : function(){
+					// 요청 실패 히
+				}
+			});
+		}
 	</script>
 </body>
 </html>

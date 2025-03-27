@@ -1,5 +1,7 @@
 package com.kh.mybatis.member.service;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mybatis.member.model.dao.MemberDao;
@@ -53,17 +55,66 @@ public class MemberServiceImpl implements MemberService{
 	public int updateMember(Member m) {
 		SqlSession sqlSession = Template.getSqlSession();
 		
-		int updateUser = mDao.updateMember(sqlSession, m);
+		int result = mDao.updateMember(sqlSession, m);
 		
+		if(result > 0 ) {
+			sqlSession.commit();
+		}
+		// *DML 실행되는 경우, 트랜잭션 처리(commit만 rollback 생략 가능)
 		sqlSession.close();
 		
-		return updateUser;
+		return result;
 	}
 
 	@Override
-	public int deleteMember(String userId) {
+	public int deleteMember(String userId, String userPwd) {
+		SqlSession sqlSession = Template.getSqlSession();
+		
+		Member m = new Member();
+		m.setUserId(userId);
+		m.setUserPwd(userPwd);
+		
+		int result = mDao.deleteMember(sqlSession,m);
+		
+		// (2) Map 형태로 가공처리 후 요청
+//		HashMap<String, String> hMap = new HashMap<>();
+//		hMap.put("id", userId);
+//		hMap.put("pwd", userPwd);
+//		mDao.deleteMember(sqlSession, hMap);
+		
+		if(result > 0) {
+			sqlSession.commit();
+		}
+		sqlSession.close();
+		return result;
+	}
+	
+	@Override
+	public int updatePassword(String userId, String userPwd, String newPwd) {
+		SqlSession sqlSession = Template.getSqlSession();
+		
+		HashMap<String, String> data = new HashMap<>();
+		data.put("userId", userId);
+		data.put("userPwd", userPwd);
+		data.put("newPwd", newPwd);
+		
+//		Member m = new Member();
+//		m.setUserId(userId);
+//		m.setUserPwd(userPwd);
+//		// newPwd에 대한 값...?
+		
+		int result = mDao.updatePassword(sqlSession, data);
+		if(result > 0) {
+			sqlSession.commit();
+		}
+		sqlSession.close();
+		return result;
+	}
+
+	@Override
+	public int countMemberByUserId(String userId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 }

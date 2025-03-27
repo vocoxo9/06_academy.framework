@@ -17,6 +17,27 @@
 	 				VALUES(SEQ_UNO.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{email}, #{birthday}, #{gender}, #{phone}, #{address})
 	 </insert>
 	 
+	 <update id="updateMember" parameterType="Member">
+	 	UPDATE MEMBER 
+		SET EMAIL = #{email}, GENDER = #{gender}, PHONE = #{phone}, ADDRESS = #{address},  MODIFY_DATE = SYSDATE
+		WHERE USER_ID = #{userId}
+		AND STATUS ='Y'
+	 </update>
+	 
+	 <update id="deleteMember" >
+	 	UPDATE MEMBER
+		SET STATUS = 'N', MODIFY_DATE = SYSDATE
+		WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
+	 </update>
+	 
+	 <update id="updatePassword" parameterType="HashMap">
+	 	UPDATE MEMBER
+	 	SET USER_PWD = #{ newPwd }, MODIFY_DATE = SYSDATE
+	 	WHERE USER_ID = #{ userId } AND USER_PWD = #{ userPwd } AND STATUS = 'Y'
+	 </update>
+	 
+	 
+	 
 	 <!-- 
 	 	resultMap : mybatis의 핵심 기능 중 하나
 	 				ResultSet으로부터 조회된 컬럼값을 하나씩 뽑아서
@@ -40,8 +61,8 @@
 	 	<result column="phone" property="phone" />
 	 	<result column="address" property="address" />
 	 </resultMap>
-	 
-	 
+
+
 	 <!-- 
 	 	DQL(select)
 	 	
@@ -62,9 +83,4 @@
 	 	WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd} AND STATUS = 'Y'
 	 </select>
 	 
-	 <update id="updateMember" parameterType="Member">
-	 	UPDATE MEMBER 
-		SET EMAIL = #{email}, GENDER = #{gender}, PHONE = #{phone}, ADDRESS = #{address}
-		WHERE USER_ID = #{userId}
-	 </update>
 </mapper>

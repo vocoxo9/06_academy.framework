@@ -1,5 +1,7 @@
 package com.kh.mybatis.member.model.dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mybatis.member.model.vo.Member;
@@ -19,8 +21,13 @@ public class MemberDao {
 
 	public int updateMember(SqlSession sqlSession, Member m) {
 		return sqlSession.update("memberMapper.updateMember", m);
-		
 	}
 
-	
+	public int deleteMember(SqlSession sqlSession, Member m) {
+		return sqlSession.delete("memberMapper.deleteMember", m);
+	}
+
+	public int updatePassword(SqlSession sqlSession, HashMap data) {
+		return sqlSession.update("memberMapper.updatePassword", data);
+	}
 }
