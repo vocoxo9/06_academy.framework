@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+
 import model.vo.User;
 
 /**
@@ -31,11 +33,14 @@ public class AjaxController3 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		response.setCharacterEncoding("UTF-8");
 		String userNo = request.getParameter("userNo");
 		
 		// Member m = new MemberServiceImpl().selectMember(userNo);
 		User u = new User(Integer.parseInt(userNo),"홍길동", "hgd123", "서울");
 		
+		
+	/*
 		// => vo 객체를 전달(응답)하고자 할 경우, JSONObject 형태로 전달해줘야 함
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("userNo", u.getUserNo());
@@ -45,6 +50,20 @@ public class AjaxController3 extends HttpServlet {
 		
 		response.setContentType("application/json; charset=utf-8");
 		response.getWriter().print(jsonObj);
+		
+	*/
+		// => 좀 더 간단한 방법으로 처리 (GSON : Google JSON)
+		Gson gson = new Gson();
+		response.setContentType("application/json; charset=utf-8");
+		
+		// Gson객체.toJson(vo객체, 응답시 사용되는 스트림);
+		gson.toJson(u, response.getWriter());
+		/**
+		 * Gson 사용 시 vo 객체를 응답하는 경우 JSONObject 형태로 전달
+		 * 			이 때, 키값은 vo 객체의 필드명으로 전달
+		 * 
+		 * ArrayList/배열 데이터를 응답하는 경우 JSONArray 형태로 전달
+		 */
 	}
 
 	/**

@@ -205,13 +205,67 @@
 				success : function(user){
 					console.log("** jqAjax3.do 통신 성공 **");
 					console.log(user);
+					const element = "<ul><li>"+ user.userNo +"</li></ul>"
+									+ "<li>" + user.userName + "</li>"
+									+ "<li>" + user.userId + "</li>"
+									+ "<li>" + user.address + "</li>";
+					$("#result3").html(element);
 				},
 				error : function(error){
 					console.log("** jqAjax3.do 통신 실패 **");
 					console.log(error);
-				},
-				complete : function(){
+				}
+			});
+		}
+	</script>
+	
+	<hr>
+	
+	<h4>4. 객체 배열로 응답 받기</h4>
+	<button onclick="selectList();">조회</button>
+	<div id="result4">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>이름</th>
+					<th>아이디</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	
+	<script>
+		function selectList() {
+			$.ajax({
+				url : 'jqAjax4.do',
+				success : function(list){
+					console.log(list);
 					
+					// list --> JSONArray (배열 형태)
+					// console.log(list[0]);
+					
+					// list[인덱스] --> JSONObject (일반 객체)
+					// console.log(list[0].address);
+					
+					let trList = "";
+					for(let i of list){
+						// console.log(i);	// 객체(json)
+						trList += "<tr>" 
+									+ "<td>" + i.userNo + "</td>"
+									+ "<td>" + i.userName + "</td>"
+									+ "<td>" + i.userId + "</td>"
+									+ "<td>" + i.address + "</td>"
+								+ "</tr>";
+					}
+					
+					$("#result4 tbody").html(trList);
+				},
+				error : function(error){
+					console.log("** jqAjax4.do 통신 실패 **");
+					console.log(error);
 				}
 			});
 		}
