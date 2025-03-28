@@ -113,8 +113,15 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int countMemberByUserId(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		// SqlSession 객체 생성
+		SqlSession sqlSession = Template.getSqlSession();
+		
+		// Dao 객체에게 SqlSession 객체와 데이터 전달
+		int result = mDao.countMemberByUserId(sqlSession, userId);
+		
+		sqlSession.close();
+		
+		return result;
 	}
 
 }

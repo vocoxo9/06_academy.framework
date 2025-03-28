@@ -80,8 +80,8 @@
 			</table>
 				<br><br>
 			<div align="center">
-					<td><button type="submit" class="btn btn-primary" onclick="return pwdCheck();">회원가입</button></td>
-					<td><button type="reset" class="btn btn-secondary">초기화</button></td>
+					<td><button type="submit" class="btn btn-primary" onclick="return pwdCheck();" disabled>회원가입</button></td>
+					<td><button type="reset" class="btn btn-danger">초기화</button></td>
 			</div>
 		</form>
 	</div>
@@ -175,17 +175,39 @@
 				 	+ html : html 형식(태그)
 				 	+ text : 문자열데이터
 			*/
-			$.ajx({
+			$.ajax({
 				url : 'idCheck',
 				data : {
 					userId : $userId.val()
 				},
 				type : 'get',		// 생략 가능
-				success : function(){
+				success : function(result){
 					// 요청 성공 시
+					// alert(result);
+					
+					if(result == "YYY"){
+					// 결과(result)가 사용 가능할 때('YYY')
+					// *** Controller 에서 println으로 출력하게 되면 개행 포함됨 주의
+					// '사용 가능한 아이디입니다.' 메시지 출력
+					// [회원가입]을 활성화
+						alert("사용 가능한 아이디입니다.");						
+						$("#mem-enroll-area button[type=submit]").removeAttr("disabled");
+						
+						
+					} else{
+					// 결과(result)가 사용 불가능일 때('NNN')
+					// '이미 사용중인 아이디입니다.' 메시지 출력
+					//	[회원가입] 그대로 비활성 유지
+						alert("이미 사용중인 아이디입니다.");						
+						// 아이디 입력 요소 읽기 전용으로 변경
+						$("#mem-enroll-area input[name=userId]").attr("readonly",true);
+					}
 				},
-				erorr : function(){
-					// 요청 실패 히
+				erorr : function(err){
+					// 요청 실패 시
+					
+					console.log("--- 아이디 중복체크 실패 ---");
+					console.log(err);
 				}
 			});
 		}

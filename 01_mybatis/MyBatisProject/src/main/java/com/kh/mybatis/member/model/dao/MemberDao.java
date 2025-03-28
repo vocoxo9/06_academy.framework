@@ -30,4 +30,8 @@ public class MemberDao {
 	public int updatePassword(SqlSession sqlSession, HashMap data) {
 		return sqlSession.update("memberMapper.updatePassword", data);
 	}
+
+	public int countMemberByUserId(SqlSession sqlSession, String userId) {
+		return sqlSession.selectOne("memberMapper.countMemberByUserId", userId);
+	}
 }

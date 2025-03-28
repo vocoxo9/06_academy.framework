@@ -83,4 +83,7 @@
 	 	WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd} AND STATUS = 'Y'
 	 </select>
 	 
+	 <select id="countMemberByUserId" resultType="_int">
+	 	SELECT COUNT(*) FROM MEMBER WHERE USER_ID = #{userId} AND STATUS = 'Y'
+	 </select>
 </mapper>
