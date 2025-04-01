@@ -54,7 +54,7 @@
                     <input type="number" class="form-control mb-3" name="age" id="age" placeholder="Enter Age..">  
                     
                     <label for="phone"> &nbsp; Phone </label>
-                    <input type="tel" class="form-control mb-3" name="phone" id="phone" placeholder="Enter Phone(-제외)..">  
+                    <input type="tel" class="form-control mb-3" name="phone" id="phone" placeholder="Enter Phone(-포함)..">  
                     
                     <label for="address"> &nbsp; Address </label>
                     <input type="text" class="form-control mb-3" name="address" id="address" placeholder="Enter Address..">

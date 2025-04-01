@@ -26,38 +26,39 @@
 </head>
 <body>
     <%-- header --%>
-
+	<jsp:include page="../common/header.jsp" />
+	
     <div class="outer">
         <br><br>
         <div class="inner-area">
             
             <h2>마이페이지</h2>
             <br>
-            <form action="" method="post">
+            <form action="/member/updateMember" method="post">
 
                 <div class="form-group">
                     <label for="userId">* ID </label>
-                    <input type="text" class="form-control mb-3" name="" id="userId" value="user01" readonly>
+                    <input type="text" class="form-control mb-3" name="userId" id="userId" value="${loginUser.userId}" readonly>
                     
                     <label for="userName">* Name </label>
-                    <input type="text" class="form-control mb-3" name="" id="userName"  value="홍길동" required>
+                    <input type="text" class="form-control mb-3" name="userName" id="userName"  value="${loginUser.userName }" required>
 
                     <label for="email"> &nbsp; Email </label>
-                    <input type="email" class="form-control mb-3" name="" id="email" value="user01@kh.or.kr" placeholder="Enter Email..">  
+                    <input type="email" class="form-control mb-3" name="email" id="email" value="${loginUser.email }" placeholder="Enter Email..">  
                     
                     <label for="age"> &nbsp; Age </label>
-                    <input type="number" class="form-control mb-3" name="" id="age" value="25" placeholder="Enter Age..">  
+                    <input type="number" class="form-control mb-3" name="age" id="age" value="${loginUser.age }" placeholder="Enter Age..">  
                     
                     <label for="phone"> &nbsp; Phone </label>
-                    <input type="tel" class="form-control mb-3" name="" id="phone" value="010-3333-4444" placeholder="Enter Phone(-제외)..">  
+                    <input type="tel" class="form-control mb-3" name="phone" id="phone" value="${loginUser.phone }" placeholder="Enter Phone(-제외)..">  
                     
                     <label for="address"> &nbsp; Address </label>
-                    <input type="text" class="form-control mb-3" name="" id="address" value="서울시 양천구 목동" placeholder="Enter Address..">
+                    <input type="text" class="form-control mb-3" name="address" id="address" value="${loginUser.address }" placeholder="Enter Address..">
 
                     <label for=""> &nbsp; Gender</label> &nbsp;&nbsp;
-                    <input type="radio" class="mb-3" name="" id="Male" value="M" checked>
+                    <input type="radio" class="mb-3" name="gender" id="Male" value="M" checked>
                     <label for="Male">남자</label> &nbsp;&nbsp;
-                    <input type="radio" class="mb-3" name="" id="Female" value="F">
+                    <input type="radio" class="mb-3" name="gender" id="Female" value="F">
                     <label for="Female">여자</label><br>
 
                 </div>
@@ -78,7 +79,7 @@
               <h1 class="modal-title fs-5">회원탈퇴</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form action="/member/deleteMember" method="post">
                 <div class="modal-body" >
                     <div align="center">
                         <b>
@@ -88,7 +89,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="userPwd" class="col-form-label">비밀번호</label>
-                        <input type="password" class="form-control" placeholder="Enter Password.." id="userPwd" />
+                        <input type="password" class="form-control" name="userPwd" placeholder="Enter Password.." id="userPwd" />
+                        <input type="hidden" name="userId" value="${ loginUser.userId }"/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -98,6 +100,8 @@
           </div>
         </div>
       </div>
+      
     <%-- footer --%>
+    <jsp:include page="../common/footer.jsp" />
 </body>
 </html>

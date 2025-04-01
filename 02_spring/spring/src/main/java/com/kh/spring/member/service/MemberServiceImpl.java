@@ -23,26 +23,30 @@ public class MemberServiceImpl implements MemberService{
 */
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mDao.insertMember(m);
 	}
 
 	@Override
 	public Member loginMember(Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.loginMember(m);
 	}
 
 	@Override
 	public Member updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		// 회원 정보 수정
+		int updateMem = mDao.updateMember(m);
+		
+		// 수정 성공 시 회원 정보 조회
+		if(updateMem > 0) {
+			return mDao.loginMember(m);	
+		} else {
+			return null;
+		}
 	}
 
 	@Override
-	public int deleteMember(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMember(String userId) {
+		return mDao.deleteMember(userId);
 	}
 	
 }

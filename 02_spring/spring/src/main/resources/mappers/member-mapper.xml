@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.spring.member.model.dao.MemberDao">
+
+  <insert id="insertMember">
+  	INSERT INTO MEMBER (USER_ID, USER_PWD, USER_NAME, EMAIL, GENDER, AGE, PHONE, ADDRESS)
+  		VALUES (#{userId}, #{userPwd}, #{userName}, #{email}, #{gender}, #{age}, #{phone}, #{address})
+  </insert>
+  
+  <update id="updateMember">
+  	UPDATE MEMBER 
+  	SET USER_NAME = #{userName}, EMAIL = #{email}, AGE = #{age}, PHONE = #{phone}, ADDRESS = #{address} , GENDER = #{gender}
+  	WHERE USER_ID = #{userId}
+  </update>
+  
+  <delete id="deleteMember">
+  	DELETE FROM MEMBER 
+  	WHERE USER_ID = #{userId} AND STATUS = 'Y'
+  </delete>
+  
+  <select id="loginMember" resultType="Member">
+  	SELECT USER_ID, USER_PWD, USER_NAME, EMAIL, GENDER, AGE, PHONE, ADDRESS
+  		FROM MEMBER
+  	WHERE USER_ID = #{userId} <!-- AND USER_PWD = #{userPwd} --> AND STATUS = 'Y'
+  </select>
+  
+</mapper>
