@@ -72,8 +72,12 @@ local.properties
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
 
 
-# 제외
+# ++ 제외
 Servers/
 **/.settings/
 **/bin/
 **/.classpath
+.mvn/
+.gitattributes
+mvnw
+mvnw.cmd
