@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ page import="com.kh.spring.member.model.vo.Member, com.kh.spring.notice.model.vo.Notice" %>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	Notice notice = (Notice)request.getAttribute("n");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,6 +30,9 @@
     </style>    
 </head>
 <body>
+
+<% String alertMsg = (String)request.getAttribute("alertMsg"); %>
+
     <%-- header --%>
     <jsp:include page="../common/header.jsp" />
 
@@ -68,11 +75,14 @@
             </table>
             <br>
 
+			<% if(	notice != null && loginUser != null &&
+					notice.getNoticeWriter().equals(loginUser.getUserId())) {%>
             <div align="center">
-                <!-- 작성자와 로그인한 계정이 동일한 경우만 표시 -->
-                <a href="" class="btn btn-primary">수정</a>
-                <a href="" class="btn btn-danger">삭제</a>
+                <!-- 작성자와 로그인한 계정이 동일한 경우(관리자인 경우)만 표시 -->
+                <a href="/notice/updateForm?no=${ n.noticeNo }" class="btn btn-primary">수정</a>
+                <a href="/notice/delete?no=${ n.noticeNo }" class="btn btn-danger" >삭제</a>
             </div>
+            <% } %>
         </div>
         <br><br>
 
@@ -80,5 +90,6 @@
 
     <%-- footer --%>
     <jsp:include page="../common/footer.jsp" />    
+
 </body>
 </html>

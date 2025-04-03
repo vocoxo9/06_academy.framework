@@ -38,4 +38,27 @@ public class NoticeDao {
 	public Notice selectNoticeDetail(int noticeNo) {
 		return sqlSession.selectOne("noticeMapper.selectNoticeDetail", noticeNo);
 	}
+
+	/**
+	 * 공지사항 추가
+	 * @param notice	추가될 공지사항 정보
+	 * @return
+	 */
+	public int insertNotice(Notice notice) {
+		return sqlSession.insert("noticeMapper.insertNotice", notice);
+	}
+
+	public int updateNotice(Notice notice) {
+		return sqlSession.update("noticeMapper.updateNotice", notice);
+	}
+
+	
+	/**
+	 * 	공지사항 삭제
+	 * @param noticeNo	삭제할 공지사항 번호
+	 * @return
+	 */
+	public int deleteNotice(int noticeNo) {
+		return sqlSession.delete("noticeMapper.deleteNotice", noticeNo);
+	}
 }

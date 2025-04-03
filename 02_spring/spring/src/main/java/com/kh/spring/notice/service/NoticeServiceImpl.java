@@ -28,20 +28,17 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public int insertNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+		return nDao.insertNotice(notice);
 	}
 
 	@Override
 	public int updateNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+		return nDao.updateNotice(notice);
 	}
 
 	@Override
 	public int deleteNotice(int noticeNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return nDao.deleteNotice(noticeNo);
 	}
 
 }

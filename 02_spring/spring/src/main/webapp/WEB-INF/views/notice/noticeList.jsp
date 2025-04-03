@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.kh.spring.notice.model.vo.Notice" %>
+<%@ page import="java.util.ArrayList, com.kh.spring.notice.model.vo.Notice, com.kh.spring.member.model.vo.Member" %>
 <%
 	ArrayList<Notice> list = (ArrayList)request.getAttribute("list");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
+<%-- session 영역에 저장된 Member 객체 가져오기 --%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -38,6 +40,7 @@
     </style>
 </head>
 <body>
+<% String alertMsg = (String) session.getAttribute("alertMsg"); %>
     <%-- header --%>
     <jsp:include page="../common/header.jsp" />
 
@@ -48,9 +51,11 @@
             <br>
 
             <%-- admin 계정일때만 글쓰기 버튼 표시 --%>
-            <a href="" class="btn btn-secondary" style="float:right">글쓰기</a>
+            <% if(loginUser != null && 
+            		loginUser.getUserId().equals("admin")) {%>
+            <a href="/notice/enrollForm" class="btn btn-secondary" style="float:right">글쓰기</a>
             <br>
-            
+            <% } %>
             <br>
             <table id="noticeList" class="table table-hover" align="center">
                 <thead>
@@ -103,7 +108,12 @@
     <jsp:include page="../common/footer.jsp" />
     
     <script>
-    	onload = function(){
+    	window.addEventListener('load', function(){
+    	// load 이벤트가 추가적으로 동작하게끔 수정 (상단의 nav 클릭되게)
+    	//onload = function(){
+    	
+    	
+    	
     		const noticeTr = document.querySelectorAll("#noticeList tbody tr");
     		// => [Ele, Ele, Ele, ...]
     		
@@ -112,7 +122,7 @@
     				location.href = "/notice/detail?no=" + ele.children[0].innerText ;
     			}
     		}
-    	}
+    	});
     </script>
 </body>
 </html>
