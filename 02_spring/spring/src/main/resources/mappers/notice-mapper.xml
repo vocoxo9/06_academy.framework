@@ -7,8 +7,13 @@
 	<select id="selectNoticeList" resultType="Notice">
 		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_WRITER, CREATE_DATE
 		FROM NOTICE
+		WHERE 1=1
+		 	<if test=" keyword != null">
+		 		AND NOTICE_TITLE LIKE '%' || #{keyword} ||'%'
+		 	</if>
 		ORDER BY NOTICE_NO DESC
 	</select>
+	
 	
 	<select id="selectNoticeDetail" resultType="Notice">
 		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_WRITER, NOTICE_CONTENT, CREATE_DATE
@@ -16,16 +21,33 @@
 		WHERE NOTICE_NO = #{ noticeNo }
 	</select>
 	
+	<select id="selectNoticeSearch" resultType="Notice">
+		SELECT *
+		FROM NOTICE
+		WHERE NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectNoticeCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE 1=1
+		<if test="keyword != null">
+			AND NOTICE_TITLE LIKE '%' || #{keyword} ||'%'
+		</if>
+	</select>
+	
+	
 	<insert id="insertNotice">
 		INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_WRITER, NOTICE_CONTENT)
 		VALUES (SEQ_NNO.NEXTVAL, #{noticeTitle}, #{noticeWriter}, #{noticeContent})
 	</insert>
+	
 	
 	<update id="updateNotice">
 		UPDATE NOTICE 
 		SET NOTICE_TITLE = #{ noticeTitle }, NOTICE_CONTENT = #{ noticeContent } 
 		WHERE NOTICE_NO = #{ noticeNo }
 	</update>
+	
 	
 	<delete id="deleteNotice">
 		DELETE NOTICE WHERE NOTICE_NO = #{ noticeNo }
