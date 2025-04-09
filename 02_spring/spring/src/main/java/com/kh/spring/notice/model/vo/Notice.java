@@ -1,5 +1,7 @@
 package com.kh.spring.notice.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +14,5 @@ public class Notice {
 	private String noticeTitle;
 	private String noticeWriter;
 	private String noticeContent;
-	private String createDate;
+	private Date createDate;
 }

@@ -119,7 +119,7 @@
                 });
             });
         }
-        // function shoMenu(list) {}
+        // function showMenu(list) {}
         const showMenu = (list) => {
         	const selMenu = sessionStorage.getItem("menu");
         	if (selMenu) {

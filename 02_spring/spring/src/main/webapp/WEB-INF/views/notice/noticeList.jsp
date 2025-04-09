@@ -95,34 +95,39 @@
 			%>
             <div id="pagingArea">
                 <ul class="pagination">
-              		<%-- 현재 페이지가 1일 때 비활성화 --%>
-              		<% if (currPage == 1) { %>
-              			<li class="page-item disabled"><a href="/notice/list?cpage=<%= currPage - 1 %>" class="page-link">Prev</a></li>
-                    <% } else{ %>
-                    	<li class="page-item"><a href="/notice/list?cpage=<%= currPage - 1 %>" class="page-link">Prev</a></li>
+                	<%-- 현재 페이지가 1일 때 비활성화 --%>
+                	<% if (currPage == 1) { %>
+                    	<li class="page-item disabled"><a class="page-link">Prev</a></li>
+                    <% } else { %>
+                    	<li class="page-item">
+                    		<a class="page-link" data-curr="<%= currPage-1 %>">Prev</a>
+                    	</li>
                     <% } %>
                     
+                    <%-- 반복문을 사용하여 시작번호, 끝번호를 활용하여 표시 --%>
+                    <% for (int p = startPage; p <= endPage; p++) { %>
+                    	<li class="page-item">
+                    		<%-- <a href="/notice/list?cpage=<%= p %>" class="page-link"><%= p %></a> --%>
+                    		<a class="page-link <% if (currPage == p) {%>actice<% } %>" data-curr="<%= p %>"><%= p %></a>
+                    	</li>
+                    <% } %>
                     
-                    <%-- 반복문을 사용하여 시작번호, 끝 번호를 활용하여 표시 --%>
-                    <% for(int p=startPage; p <=endPage; p++ ) {%>
-                    	<li class="page-item"><a href="/notice/list?cpage=<%= p %>" class="page-link"><%= p %></a></li>                    
-					<% } %>
-					
-					
-					<%-- 현재 페이지가 마지막 번호일 때 비활성화 --%>
-					<% if (currPage == maxPage) {%>
-                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+                    <%-- 현재 페이지가 마지막 번호일 때 비활성화 --%>
+                    <% if (currPage == maxPage) { %>
+                    	<li class="page-item disabled"><a class="page-link">Next</a></li>
                     <% } else { %>
-                    <li class="page-item"><a href="/notice/list?cpage=<%= currPage + 1 %>" class="page-link">Next</a></li>
+                    	<li class="page-item">
+                    		<a class="page-link" data-curr="<%= currPage + 1 %>">Next</a>
+                    	</li>
                     <% } %>
                 </ul>
             </div>
 
             <br clear="both">
 
-            <form action="/notice/search" id="searchForm">
+            <form action="/notice/list" id="searchForm">
                 <div class="text">
-                    <input type="text" class="form-control" name="keyword" placeholder="검색할 제목을 입력하세요.">
+                    <input type="text" class="form-control" name="keyword" value="${ keyword }" placeholder="검색할 제목을 입력하세요.">
                 </div>
                 <button class="searchBtn btn btn-secondary">검색</button>
             </form>
@@ -134,20 +139,36 @@
     <jsp:include page="../common/footer.jsp" />
     
     <script>
-    	window.addEventListener('load', function(){
-    	// load 이벤트가 추가적으로 동작하게끔 수정 (상단의 nav 클릭되게)
-    	//onload = function(){
-    	
-    	
-    	
-    		const noticeTr = document.querySelectorAll("#noticeList tbody tr");
-    		// => [Ele, Ele, Ele, ...]
+    	window.addEventListener('load', function() {
+    	// window.onload = function() {
     		
-    		for(const ele of noticeTr){
-    			ele.onclick = function(){
-    				location.href = "/notice/detail?no=" + ele.children[0].innerText ;
+    		// * 공지사항 목록 클릭 시 상세페이지 이동
+    		const noticeTr = document.querySelectorAll("#noticeList tbody tr");
+    		// => [Ele, Ele, Ele, ..]
+    		
+    		for(const ele of noticeTr) {
+    			ele.onclick = function() {
+    				location.href = "/notice/detail?no=" + ele.children[0].innerText;
     			}
     		}
+    		
+    		// * 페이징바 클릭 시 해당 페이지로 이동
+    		const pagingArr = document.querySelectorAll("#pagingArea a");
+    		
+    		for(const ele of pagingArr) {
+    			ele.onclick = function() {
+    			
+    				const keyword = "${keyword}";
+    				
+    				let requestUrl = "/notice/list?cpage=" + ele.getAttribute("data-curr");
+    				
+    				if (keyword != "") {
+    					requestUrl += "&keyword=" + keyword;
+    				}
+    				ele.href = requestUrl;
+    			}
+    		}
+    		
     	});
     </script>
 </body>
