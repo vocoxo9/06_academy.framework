@@ -43,6 +43,7 @@ public class BoardController {
 		
 		// request 영역에 조회된 데이터 저장
 		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
 		
 		return "board/boardList";
 	}
