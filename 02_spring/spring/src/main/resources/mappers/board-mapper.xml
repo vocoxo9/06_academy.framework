@@ -9,10 +9,31 @@
 		SELECT BOARD_NO, BOARD_TITLE, BOARD_WRITER, COUNT, CREATE_DATE, ORIGIN_NAME
 		FROM BOARD
 		WHERE STATUS='Y'
+			<if test="condition == 'writer'">
+		 		AND BOARD_WRITER LIKE '%' || #{keyword} || '%'
+		 	</if>
+		 	<if test="condition == 'title'">
+		 		AND BOARD_TITLE LIKE '%${keyword}%'
+		 	</if>
+		 	<if test="condition == 'content'">
+		 		AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+		 	</if>
 		ORDER BY BOARD_NO DESC
 	</select>
 
 	<select id="selectBoardCount" resultType="_int">
-		SELECT COUNT(*) FROM BOARD WHERE STATUS = 'Y'
+		SELECT COUNT(*) 
+		FROM BOARD 
+		WHERE STATUS = 'Y'
+		 	<if test="condition == 'writer'">
+		 		AND BOARD_WRITER LIKE '%' || #{keyword} || '%'
+		 	</if>
+		 	<if test="condition == 'title'">
+		 		AND BOARD_TITLE LIKE '%${keyword}%'
+		 	</if>
+		 	<if test="condition == 'content'">
+		 		AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+		 	</if>
 	</select>
+
 </mapper>

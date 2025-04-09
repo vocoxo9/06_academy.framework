@@ -106,9 +106,9 @@
                     
                     <%-- 반복문을 사용하여 시작번호, 끝번호를 활용하여 표시 --%>
                     <% for (int p = startPage; p <= endPage; p++) { %>
-                    	<li class="page-item">
+                    	<li class="page-item <% if (currPage == p) {%>actice<% } %>">
                     		<%-- <a href="/notice/list?cpage=<%= p %>" class="page-link"><%= p %></a> --%>
-                    		<a class="page-link <% if (currPage == p) {%>actice<% } %>" data-curr="<%= p %>"><%= p %></a>
+                    		<a class="page-link" data-curr="<%= p %>"><%= p %></a>
                     	</li>
                     <% } %>
                     

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.spring.board.model.dao.BoardDao;
+import com.kh.spring.board.model.dto.SearchDto;
 import com.kh.spring.board.model.vo.Board;
 import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.PageInfo;
@@ -29,20 +30,20 @@ public class BoardServiceImpl implements BoardService{
 	 * 게시글 개수 조회
 	 */
 	@Override
-	public int selectBoardCount() {
-		return bDao.selectBoardCount();
+	public int selectBoardCount(SearchDto searchDto) {
+		return bDao.selectBoardCount(searchDto);
 	}
 
 	/**
 	 * 게시글 목록 조회
 	 */
 	@Override
-	public ArrayList<Board> selectBoardList(PageInfo pi) {
+	public ArrayList<Board> selectBoardList(PageInfo pi, SearchDto searchDto) {
 		// RowBounds 객체 => MyBatis 프레임워크에서 제공하는 객체
 		int offset = (pi.getCurrPage() - 1) * pi.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pi.getBoardLimit());
 		
-		return bDao.selectBoardList(rb);
+		return bDao.selectBoardList(rb, searchDto);
 	}
 
 	@Override

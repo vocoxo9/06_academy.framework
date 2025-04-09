@@ -2,16 +2,17 @@ package com.kh.spring.board.service;
 
 import java.util.ArrayList;
 
+import com.kh.spring.board.model.dto.SearchDto;
 import com.kh.spring.board.model.vo.Board;
 import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.PageInfo;
 
 public interface BoardService {
 	/* 게시글 개수 조회 R */
-	int selectBoardCount();
+	int selectBoardCount(SearchDto searchDto);
 	
 	/* 게시글 전체 목록 조회 R */
-	ArrayList<Board> selectBoardList(PageInfo pi);
+	ArrayList<Board> selectBoardList(PageInfo pi, SearchDto searchDto);
 	
 	/* 게시글 상세 조회 R */
 	Board selectBoardDetail(int boardNo);

@@ -3,9 +3,6 @@
 <%@ page import="java.util.ArrayList, 
 				com.kh.spring.board.model.vo.Board,
 				com.kh.spring.common.PageInfo" %>
-<%
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -68,67 +65,68 @@
                 </thead>
 
                 <tbody>
-                <% 
-               		ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list"); 
-                %>
+                	<%
+                		ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+                	%>
                 	<%-- 조회된 목록 표시 --%>
-                    <% for (Board b : list) {%>                    
-                    <tr>
-                        <td><%= b.getBoardNo() %></td>
-                        <td><%= b.getBoardTitle() %></td>
-                        <td><%= b.getBoardWriter() %></td>
-                        <td><%= b.getCount() %></td>
-                        <td><%= b.getCreateDate() %></td>
-                        <td>
-                        	<% if (b.getOriginName() != null) { %>
-                        	■
-                        	<% } %>
-                        </td>
-                    </tr>
-                    <% } %>
+                	<% for (Board b : list) { %>
+	                    <tr>
+	                        <td><%= b.getBoardNo() %></td>
+	                        <td><%= b.getBoardTitle() %></td>
+	                        <td><%= b.getBoardWriter() %></td>
+	                        <td><%= b.getCount() %></td>
+	                        <td><%= b.getCreateDate() %></td>
+	                        <td>
+	                        	<% if (b.getOriginName() != null) { %>
+	                        	■
+	                        	<% } %>
+	                        </td>
+	                    </tr>
+                    <% } %>                  
                 </tbody>
             </table>
             <br>
-
-	
+            
 			<%
-				int currPage = 0, startPage = 0, endPage = 0, maxPage = 0;
-			
-				if( pi != null){
-					currPage = pi.getCurrPage();
-					startPage = pi.getStartPage();
-					endPage = pi.getEndPage();
-					maxPage = pi.getMaxPage();
-				}
+				PageInfo pi = (PageInfo)request.getAttribute("pi");
+			    int currPage = 0, startPage = 0, endPage = 0, maxPage = 0;
+			    if (pi != null) {
+			    	currPage = pi.getCurrPage();
+			    	startPage = pi.getStartPage();
+			    	endPage = pi.getEndPage();
+			    	maxPage = pi.getMaxPage();
+			    }
 			%>
-			
             <div id="pagingArea">
                 <ul class="pagination">
-                <% if (currPage == 1){ %>
-                    <li class="page-item disabled"><a href="" class="page-link">Prev</a></li>
-                <% } else { %>
-                	<li class="page-item"><a href="" class="page-link">Prev</a></li>
-                <% } %>
                 
-                
-                <% for (int p = startPage; p<=endPage; p++) { %>
                     <li class="page-item">
-                    	<a href="/notice/list?cpage=<%= p %>" class="page-link"><%= p %></a>
+                	<% if (currPage == 1) { %>
+                		<a class="page-link disabled">Prev</a>
+                	<% } else { %>
+                    	<a data-curr="<%= currPage - 1 %>" class="page-link" >Prev</a>
+                   	<% } %>
                     </li>
-                <% } %>
-                
-                
-                <% if (currPage == maxPage) {%>
-                    <li class="page-item disabled"><a href="" class="page-link">Next</a></li>
-                <% } else { %>
-                	<li class="page-item"><a href="" class="page-link">Next</a></li>
-                <% } %>
+                    
+                    <% for(int n=startPage; n<=endPage; n++) { %>
+                    	<li class="page-item <% if (currPage == n) { %>active<% } %>">
+                    		<a data-curr="<%= n %>" class="page-link"><%= n %></a>
+                    	</li>
+                    <% } %>
+                    
+                    <li class="page-item">
+                    <% if (currPage == maxPage) { %>
+                    	<a class="page-link disabled">Next</a>
+                    <% } else {%>
+                    	<a data-curr="<%= currPage + 1 %>" class="page-link">Next</a>
+                    <% } %>
+                    </li>
                 </ul>
             </div>
 
             <br clear="both">
 
-            <form action="" id="searchForm">
+            <form action="/board/list" id="searchForm">
                 <div class="select">
                     <select name="condition" id="" class="custom-select form-select">
                         <option value="writer">작성자</option>
@@ -137,7 +135,7 @@
                     </select>
                 </div>
                 <div class="text">
-                    <input type="text" class="form-control" name="keyword">
+                    <input type="text" class="form-control" name="keyword" value="${ keyword }">
                 </div>
                 <button class="searchBtn btn btn-secondary">검색</button>
             </form>
@@ -147,5 +145,46 @@
 
     <%-- footer --%>
     <jsp:include page="../common/footer.jsp" />
+    
+    <script>
+    	window.addEventListener('load', function(){
+    	
+    		/* 검색 조건 초기화 */
+    		const condition = "${condition}";
+    		console.log("condition::" + condition);
+    		
+    		if(condition != ""){
+    			const options = document.querySelectorAll("#searchForm select[name=condition] option");
+    			for(const ele of options){
+    				//console.log("option.value::" + ele.value);
+    				if(condition == ele.value){
+    					ele.setAttribute("selected", true);
+    					break;
+    				}
+    			}
+    		}
+    		
+    		
+    		/* 페이징바 클릭 이벤트 추가 */
+	    	const pageLink = document.querySelectorAll("#pagingArea a[data-curr]");
+	    		    	
+	    	for(const ele of pageLink){
+	    		ele.onclick = function(){
+	    			// * 키워드, 검색 조건 --> request 영역에서 가져오거나, 해당 요소에 접근해서 가져오기
+ 
+	    			const keyword = "${ keyword }";
+	    			
+	    			let requestUrl = "/board/list?cpage=" + ele.getAttribute("data-curr");
+	    				    		
+	    			if(keyword != ""){	// 검색 정보가 있을 경우
+	    				requestUrl += "&keyword=" + keyword
+	    							+ "&condition=" + document.querySelector("select[name=condition]").value;
+	    			}
+	    			ele.href = requestUrl;
+	    			
+	    		}
+	    	}
+    	});
+    </script>
 </body>
 </html>
