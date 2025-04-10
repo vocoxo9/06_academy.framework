@@ -16,6 +16,12 @@ public interface BoardDao {
 	/* 게시글 개수 조회 */
 	int selectBoardCount(SearchDto searchDto);
 
+	/* 게시글 작성 */
+	int insertBoard(Board board);
+
+	Board selectBoardDetail(int boardNo);
+
+	
 	
 	
 	

@@ -1,0 +1,29 @@
+member
+-> private String countryName; 추가
+
+member-mapper.xml
+-> loginMember 수정
+	<select id="loginMember" resultMap="memberResultMap" parameterType="kr.co.khedu.member.model.vo.Member"> 		
+		SELECT MEMBER_ID, EMAIL, PASSWORD, ROLE, NICKNAME, BIRTHDAY, PHONE, CREATED_AT, DELETED_AT, NAME
+		FROM TB_MEMBER 
+		JOIN TR_COUNTRY USING(COUNTRY_ID)
+		WHERE EMAIL= #{email} 
+		AND PASSWORD= #{password}
+		AND DELETED_AT IS NULL  
+	</select>
+
+mypage.jsp ㅇㄴㄹ
+mypagecontroller ㅇㄴㄹ
+mypage.css ㅇㄴㄹ
+signupcontroller ㅇㄴㄹ
+
+
+
+
+	<select id="loginMember" resultMap="memberResultMap" parameterType="kr.co.khedu.member.model.vo.Member"> 
+		SELECT * 
+		FROM TB_MEMBER 
+		WHERE EMAIL= #{email} 
+		AND PASSWORD= #{password} 
+		AND DELETED_AT IS NULL 
+	</select>

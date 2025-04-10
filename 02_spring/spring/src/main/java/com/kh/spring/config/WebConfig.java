@@ -15,8 +15,12 @@ public class WebConfig implements WebMvcConfigurer{
 		// * LoginInterceptor
 		
 		registry.
-			addInterceptor(new LoginInterceptor()).
-			addPathPatterns("/member/myPage");
+			addInterceptor(new LoginInterceptor())
+			// addPathPatterns("/member/myPage", "/board/enrollForm");
+			// 회원서비스(마이페이지), 공지사항(목록 제외하고 접근 제어), 자유게시판(목록 제외하고 접근 제어)
+			.addPathPatterns("/member/mypage","/notice/**", "/board/**")
+			.excludePathPatterns("/notice/list", "/board/list");
+			// notice/** => notice로 시작되는 모든 주소를 막겠다는 뜻, excludePathPatterns로 제외할 주소만 설정
 	}
 	
 }

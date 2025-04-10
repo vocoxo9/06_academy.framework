@@ -41,8 +41,11 @@
 </head>
 <body>
     <%-- header --%>
-    <jsp:include page="../common/header.jsp" />
-
+    <%-- 
+    	<jsp:include page="../common/header.jsp" /> 
+    	include 지시어 자체로 loginUser까지 포함시키기 (header session scope에 저장되어 있음)
+    --%>
+	<%@ include file="../common/header.jsp" %>
     <div class="outer">
         <br><br>
         <div class="innerOuter" style="padding: 5% 10%">
@@ -50,7 +53,11 @@
             <br>
 
             <%-- 로그인 시에만 글쓰기 버튼 표시 --%>
-            <a href="" class="btn btn-secondary" style="float:right">글쓰기</a>
+            <% 
+            	if(loginUser != null){
+            %>
+            <a href="/board/enrollForm" class="btn btn-secondary" style="float:right">글쓰기</a>
+            <% } %>
             <br>
             
             <br>
@@ -184,7 +191,17 @@
 	    			
 	    		}
 	    	}
-    	});
+	    	
+    	// 자유게시판 목록 클릭 시 상세페이지로 이동
+    	const boardTr = document.querySelectorAll("#boardList tbody tr");
+    	
+    	for(const ele of boardTr){
+    		ele.onclick = function(){
+    			location.href = "/board/detail?bno=" + ele.children[0].innerText;
+    		}
+    	}	    	
+   	});
+    	
     </script>
 </body>
 </html>

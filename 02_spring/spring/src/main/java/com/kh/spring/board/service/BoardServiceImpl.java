@@ -48,14 +48,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Board selectBoardDetail(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return bDao.selectBoardDetail(boardNo);
 	}
 
 	@Override
 	public int insertBoard(Board board) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.insertBoard(board);
 	}
 
 	@Override
