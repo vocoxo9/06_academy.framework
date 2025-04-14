@@ -52,20 +52,28 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public ArrayList<Reply> selectReplyList(int boardNo) {
+		return bDao.selectReplyList(boardNo);
+	}
+
+	@Override
+	public int increaseCount(int boardNo) {
+		return bDao.increaseCount(boardNo);
+	}
+	
+	@Override
 	public int insertBoard(Board board) {
 		return bDao.insertBoard(board);
 	}
 
 	@Override
 	public int updateBoard(Board board) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.updateBoard(board);
 	}
 
 	@Override
 	public int deleteBoard(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.deleteBoard(boardNo);
 	}
 
 	@Override
@@ -74,16 +82,5 @@ public class BoardServiceImpl implements BoardService{
 		return 0;
 	}
 
-	@Override
-	public ArrayList<Reply> selectReplyList(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int increaseCount(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }

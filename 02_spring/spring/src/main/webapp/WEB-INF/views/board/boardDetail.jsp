@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.kh.spring.board.model.vo.Board" %>
-<% Board b = (Board)request.getAttribute("b"); %>
+<%@ page import="com.kh.spring.board.model.vo.Board,
+				com.kh.spring.board.model.vo.Reply,
+				java.util.ArrayList" %>
+<% 
+	Board b = (Board)request.getAttribute("board"); 
+	ArrayList<Reply> rList = (ArrayList<Reply>)request.getAttribute("rList");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -45,17 +50,17 @@
                 <tr>
                     <th width="100">제목</th>
                     <td colspan="3">
-                        ${ b.boardTitle }
+                        ${ board.boardTitle }
                     </td>
                 </tr>
                 <tr>
                     <th>작성자</th>
                     <td>
-                        ${ b.boardWriter }
+                        <%= b.getBoardWriter() %>
                     </td>
                     <th>작성일</th>
                     <td>
-                        ${ b.createDate }
+                        <%= b.getCreateDate() %>
                     </td>
                 </tr>
                 <tr>
@@ -64,7 +69,8 @@
                     <% if ( b.getOriginName() == null) {%>
                     	첨부파일 없음
                     <% } else { %>
-                        ${ b.originName }
+                        <a href="<%= b.getChangeName() %>" download>
+                        <%= b.getOriginName() %></a>
                     <% } %>
                     </td>
                 </tr>
@@ -75,50 +81,44 @@
                 <tr>
                     <td colspan="4">
                         <p style="height:150px;">
-                            ${ b.boardContent }
+                            <%= b.getBoardContent() %>
                         </p>
                     </td>
                 </tr>
             </table>
             <br>
 
-            <div align="center">
-                <!-- 작성자와 로그인한 계정이 동일한 경우만 표시 -->
-                <a href="" class="btn btn-primary">수정</a>
-                <a href="" class="btn btn-danger">삭제</a>
-            </div>
+            <!-- 작성자와 로그인한 계정이 동일한 경우만 표시 -->
+            <% if( loginUser.getUserId().equals(b.getBoardWriter()) ) { %>
+	            <div align="center">
+	                <a href="/board/updateForm?bno=${board.boardNo}" class="btn btn-primary">수정</a>
+	                <a href="/board/delete?bno=<%= b.getBoardNo() %>" class="btn btn-danger">삭제</a>
+	            </div>
+            <% } %>
             <br><br>
 
             <table id="replyArea" class="table" align="center">
                 <thead>
                     <tr>
                         <th colspan="2">
-                            <textarea name="" id="content" cols="55" rows="2" class="form-control" style="resize: none;"></textarea>
+                            <textarea name="reply" id="content" cols="55" rows="2" class="form-control" style="resize: none;"></textarea>
                         </th>
                         <th style="vertical-align:middle;">
                             <button class="btn btn-secondary">등록</button>
                         </th>
                     </tr>
                     <tr>
-                        <td colspan="3">댓글 (<span id="rcount">3</span>)</td>
+                        <td colspan="3">댓글 (<span id="rcount"><%= rList.size() %></span>)</td>
                     </tr>
                 </thead>
                 <tbody>
+                <% for (Reply r : rList) { %>
                     <tr>
-                        <th>user02</th>
-                        <td>댓글-----내용</td>
-                        <td>2024-04-15</td>
+                        <th><%= r.getReplyWriter() %></th>
+                        <td><%= r.getReplyContent() %></td>
+                        <td><%= r.getCreateDate() %></td>
                     </tr>
-                    <tr>
-                        <th>user01</th>
-                        <td>ㅋㅋㅋㅋㅋㅋㅋ</td>
-                        <td>2024-04-13</td>
-                    </tr>
-                    <tr>
-                        <th>admin</th>
-                        <td>댓글테스트ㅋㅋ</td>
-                        <td>2024-04-07</td>
-                    </tr>                         
+                    <% } %>                         
                 </tbody>
             </table>     
             <br><br>

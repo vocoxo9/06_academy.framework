@@ -95,7 +95,6 @@ public class NoticeController {
 			// 상세페이지 응답
 			return "notice/noticeDetail";
 		} else {
-			model.addAttribute("errorMsg", "게시글 정보를 불러올 수 없습니다.");
 			return "common/errorPage";
 		}
 	}
