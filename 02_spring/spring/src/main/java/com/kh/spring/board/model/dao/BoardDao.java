@@ -35,5 +35,10 @@ public interface BoardDao {
 	/* 게시글 수정 */
 	int updateBoard(Board board);
 	
+	/* 댓글 추가 */
+	int insertReply(Reply reply);
+	
+	/* 조회수 top5 조회 */
+	ArrayList<Board> selectTopFiveList();
 	
 }

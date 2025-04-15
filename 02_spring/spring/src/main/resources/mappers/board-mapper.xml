@@ -18,7 +18,14 @@
 		 	<if test="condition == 'content'">
 		 		AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
 		 	</if>
-		ORDER BY BOARD_NO DESC
+		<choose>	
+			<when test="orderby == 'count'">
+				ORDER BY COUNT DESC
+			</when>
+			<otherwise>
+				ORDER BY BOARD_NO DESC
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="selectBoardCount" resultType="_int">
@@ -88,4 +95,15 @@
 			CREATE_DATE = SYSDATE
 		WHERE BOARD_NO = #{boardNo} AND STATUS = 'Y'
 	</update>
+	
+	<insert id="insertReply">
+		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER) 
+			VALUES(SEQ_RNO.NEXTVAL, #{replyContent}, #{refBno}, #{replyWriter})
+	</insert>
+	
+	<select id="selectTopFiveList" resultType="Board">
+		SELECT *
+		FROM (SELECT * FROM BOARD ORDER BY COUNT DESC)
+		WHERE ROWNUM &lt;= 5
+	</select>
 </mapper>

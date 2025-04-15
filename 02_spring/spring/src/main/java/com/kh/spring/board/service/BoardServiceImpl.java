@@ -78,9 +78,23 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int insertReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.insertReply(reply);
 	}
 
-
+	public ArrayList<Board> selectTopFiveList(){
+		return bDao.selectTopFiveList();
+		/*
+		 	* RowBounds 객체 사용 => 페이징 처리 시 활용했던 객체
+		 		RowBounds(시작위치, 개수)
+		 		
+			RowBounds rb = new RowBounds(0, 5);
+		// * 실행할 쿼리문 => 게시글 목록 조회 시 사용했던 쿼리문 사용
+		
+		 	SearchDto 객체에 정렬 기준 데이터를 추가
+		  	SearchDto searchDto = new SearchDto();
+		  	searchDto.setOrderby("count");
+		  	
+		  	return bDao.selectBoardList(rb, searchDto);
+		 */
+	}
 }
