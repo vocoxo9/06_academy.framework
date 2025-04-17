@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Thymeleaf</title>
+</head>
+
+<body>
+	<h1>Template Engine :: Thymeleaf</h1>
+	
+	<h2>1. Thymeleaf란?</h2>
+	<p>
+		Thymeleaf는 Spring boot에서 권장하는 템플릿 엔진 중 하나로
+		HTML 파일 내에서 Java 객체를 직접 출력하거나
+		제어문(조건문, 반복문)을 사용할 수 있게 해주는 엔진이다. <br><br>
+		JSP처럼 서버 데이터를 표현할 수 있지만, HTML에 친화적이므로 브라우저에서도 깨지지 않고 잘 표시되며
+		문법이 직관적이다.
+	</p>
+
+	<h2>2. Thymeleaf 문법</h2>
+	<h3>1) 데이터 접근</h3>
+	<ol>
+		<li>
+			<code>${x}</code> : Model(request 영역)에 저장된 데이터에 접근 <br>
+			ex) model.addAttribute("x", data);
+		</li>
+		<li>
+			<code>${param.x}</code> : HTTP 요청 파라미터 데이터에 접근 <br>
+			ex) url?x=data
+		</li>
+		<li>
+			<code>${session.x}</code> : session 영역에 저장된 데이터에 접근 <br>
+			ex) session.setAttribute("x", data);
+		</li>
+		<li>
+			<code>${application.x}</code> : application 영역에 저장된 데이터 접근 <br>
+			ex) application.setAttribute("x", data);
+		</li>
+	</ol>
+
+	<h3>2) 데이터 표현</h3>
+	<ol>
+		<li>
+			<code>${x}</code> : 변수 참조
+		</li>
+		<li>
+			<code>*{x}</code> : th:object로 바인딩된(연결된) 객체의 속성(필드)에 접근 <br>
+			ex) 주로 form 태그에서 사용됨. <br>
+				&lt;form th:object="${user}"> <br>
+					&lt;input type="text" name="userId" th:field="*{id}" /> <br>
+					&lt;input type="password" name="userPwd" th:field="*{pwd}" /> <br>
+				&lt;/form>
+		</li>
+		<li>
+			<code>#{x}</code> : 메시지 표현 <br>
+			- 고정 텍스트 또는 다국어 처리(i18n) 시 사용 <br>
+			- messges.properties 파일에 설정된 데이터를 가져온다
+		</li>
+		<li>
+			<code>@{x}</code> : URL 링크 표현 <br>
+			ex) 동적인 링크 생성 시 사용 <br>
+			&lt;a th:href="@{/product/detail(id=${product.id})}"> 상세보기 &lt;/a>
+		</li>
+		<li>
+			<code>~{x}</code> : Fragment 표현 <br>
+			Fragment : 템플릿 조각을 의미
+			<ul>
+				<li>
+					[ Fragment 정의 ] : th:fragment="이름"
+				</li>
+				<li>
+					th:include ( 대상 템플릿 내용만 포함 )
+					<!-- fragments 폴더에서 test라는 템플릿 파일 안에 있는 header라는 이름으로 지정이 된 fragment 선택 -->
+					<!-- 현재 div안에는 fragment의 div 하위 내용만 가져옴 -->
+					<div th:include="~{fragments/test :: header}"
+						 style="color : blue; border: 1px solid blue;"></div>
+				</li>
+				<li>
+					th:insert ( 대상 템플릿 삽입 )
+					<!-- 현재 div안에 fragment의 div까지 그대로 존재 -->
+					<div th:insert="~{fragments/test :: header}"
+						 style="color : blue; border: 1px solid blue;"></div>
+				</li>
+				<li>
+					th:replace ( 대상 템플릿으로 대체 )
+
+					<div th:replace="~{fragments/test :: header}"
+						 style="color : blue; border: 1px solid blue;"></div>
+				</li>
+			</ul>
+		</li>
+	</ol>
+
+	<h3>3) 변수(데이터) 출력</h3>
+	<ul>
+		<li>
+			<code>th:text="${변수}"</code> : 일반 요소의 텍스트 출력
+		</li>
+		<li>
+			<code>th:value="${변수}"</code> : 입력 요소의 텍스트 출력 <br>
+			* textarea의 경우 th:text 사용해야함
+		</li>
+	</ul>
+	<pre>
+		&lt;span th:text="${post.title}">제목&lt;/span >
+		&lt;input type="text" value="제목" th:value="${post.title}" />
+	</pre>
+
+	<h3>4) 텍스트 출력</h3>
+	<!-- th:inline (타임리프가 인라인 표현식을 해석하지 못하게 설정) -->
+	<ul th:inline="none">
+		<li>
+			<code>[[${변수}]]</code> : 텍스트 그대로 출력
+		</li>
+		<li>
+			<code>[(${변수})]</code> : HTML 요소가 있는 경우 해석해서 출력
+		</li>
+	</ul>
+
+	<h3>5) 조건문</h3>
+	<p>
+		<code>th:if</code>, <code>th:unless</code> : 조건에 따라 출력
+	</p>
+	&lt;div th:if="${session.loginUser != null}"> xxx 사용자 접속 &lt;/div> <br>
+	&lt;div th:unless="${session.loginUser == null}"> 로그인 필요 &lt;/div>
+	<!-- unless : false일 때 출력 -->
+
+	<h3>6) 반복문</h3>
+	<p>
+		<code>th:each="변수명 : ${리스트}"</code> : 리스트를 순차적으로 반복
+	</p>
+	&lt;tr th:each="product : ${productList}" > <br>
+		&lt;td th:text="${product.name}"> 제품명 &lt;/td> <br>
+		&lt;td th:text="${product.price}"> 가격 &lt;/td> <br>
+	&lt;/tr>
+
+	<h3>7) 날짜 포맷</h3>
+	<p>
+		<code>#dates.format(날짜, 형식)</code>
+	</p>
+	&lt;span th:text="${#dates.format(product.createDate, 'yyyy-MM-dd')}"> 여기에 날짜를 표시합니다. &lt;/span>
+	
+	<h3>8) 그 외의 표현식</h3>
+	<ul>
+		<li>
+			<code>${#lists.size(리스트)}</code> : 리스트 길이
+		</li>
+		<li>
+			<code>${#strings.substring(문자열, 시작위치, 길이)}</code> : 문자열의 특정 위치를 추출(자르기)
+		</li>
+		<li>
+			<code>${#dates.createNow()}</code> : 현재 시간정보 조회
+		</li>
+	</ul>
+
+	<!-- 현재 시간 정보를 2025-04-17 16:09:30 형식으로 출력 -->
+	현재시간 => <span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></span>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+</html>
