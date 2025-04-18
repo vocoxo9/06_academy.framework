@@ -127,9 +127,19 @@
 	<!-- unless : false일 때 출력 -->
 
 	<h3>6) 반복문</h3>
+	
+	<p th:inline="none">
+		<code>th:each="변수명" : ${#numbers.sequence(시작번호, 끝번호 [,증가값])</code>
+	</p>
+	<div th:each="num:${#numbers.sequence(1,5)}">
+		<span th:text="${num}"></span>
+		<span>테스트</span>
+	</div>
+	
 	<p>
 		<code>th:each="변수명 : ${리스트}"</code> : 리스트를 순차적으로 반복
 	</p>
+	<!-- 결과 : (tr>td*2)*2  -->
 	&lt;tr th:each="product : ${productList}" > <br>
 		&lt;td th:text="${product.name}"> 제품명 &lt;/td> <br>
 		&lt;td th:text="${product.price}"> 가격 &lt;/td> <br>
@@ -156,7 +166,13 @@
 
 	<!-- 현재 시간 정보를 2025-04-17 16:09:30 형식으로 출력 -->
 	현재시간 => <span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></span>
-
+	
+	<br><br>
+	
+	<h2>3. 연습하기</h2>
+	<a href="/go">페이지 이동</a> X <br>
+	<a th:href="@{/go}">페이지 이동</a> 
+	<!-- @{URL 주소} 사용 시 context-path를 자동으로 붙여준다 -->
 </body>
 
 </html>

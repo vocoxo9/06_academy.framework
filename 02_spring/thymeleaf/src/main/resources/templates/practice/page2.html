@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/css/page2.css}" rel="stylesheet" />
+</head>
+<body>
+	<h1>Page 2</h1>
+	
+	<h4>
+		정적 파일(js, css, image, ...)들은
+		classpath(src/main/resources) 경로의 static 폴더에서 관리한다.
+	</h4>
+	
+	<h2>request scope에 저장된 데이터</h2>
+	<p>
+		<span th:text="${p.name}"></span>님은,
+		<span th:text="${p.age}"></span>살이고,
+		생년월일은 <span th:text="${p.birth}"></span>입니다.
+		<br>
+		취미 : 
+		<!-- 취미 정보가 있을 경우 화면에 표시 -->
+		<span th:if="${p.hobby != null}" th:text="${p.hobby + ' '}"></span>
+		<div th:if="${p.hobby != null}">
+			취미 : <span th:each="hobby : ${p.hobby}" th:text="${hobby + ' '}"></span>
+		</div>
+		
+		<!-- 취미 정보가 없을 경우 "없음" 표시 -->
+		<span th:unless="${p.hobby}">없음</span>
+	</p>
+	
+	<hr>
+	
+	<h2>session scope에 저장된 데이터</h2>
+	<span th:text="${session.user.name}"></span>님은,
+	<span th:text="${session.user.age}"></span>살이고,
+	생년월일은 <span th:text="${session.user.birth}"></span>입니다.
+	<div th:if="${p.hobby != null}">
+		취미 : <span th:each="hobby : ${p.hobby}" th:text="${hobby + ' '}"></span>
+	</div>
+	<span th:unless="${p.hobby}">없음</span>
+
+ 	<hr>
+ 	
+ 	<h2>"personList" 키값으로 저장된 회원 목록을 표시</h2>
+ 	
+	<table border="1">
+	<caption> 회원 목록 </caption>
+		<tr>
+			<th>이름</th>
+			<th>나이</th>
+			<th>생년월일</th>
+		</tr>
+		<tr th:each="list : ${personList}">
+			<td th:text="${list.name}"></td>
+			<td th:text="${list.age}"></td>
+			<td th:text="${list.birth}"></td>
+		</tr>
+		<tr th:each="list : ${personList}" th:object="${list}">
+			<td th:text="*{name}"></td>
+			<td th:text="*{age}"></td>
+			<td th:text="*{birth}"></td>
+		</tr>
+	</table>
+	
+	<br><br><br>
+	<a href="/leaf">index</a> <br>
+</body>
+</html>
