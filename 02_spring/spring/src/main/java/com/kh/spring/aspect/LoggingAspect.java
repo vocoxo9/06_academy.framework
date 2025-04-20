@@ -3,6 +3,7 @@ package com.kh.spring.aspect;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import org.apache.ibatis.binding.MapperMethod.MethodSignature;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -11,7 +12,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +79,7 @@ public class LoggingAspect {
 			
 		// * 실행되는 메소드 정보를 추출
 		MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
-		Method method = methodSignature.getMethod();
+		Class<? extends MethodSignature> method = methodSignature.getClass();
 			
 		// * 파라미터 추출
 		Object[] obj = joinPoint.getArgs();

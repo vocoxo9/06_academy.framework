@@ -1,12 +1,12 @@
-package com.kh.todo.service;
+package com.kh.todo.todoList.service;
 
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
 import com.kh.todo.member.model.vo.Member;
-import com.kh.todo.model.dao.TodoDAO;
-import com.kh.todo.model.vo.Todo;
+import com.kh.todo.todoList.model.dao.TodoDAO;
+import com.kh.todo.todoList.model.vo.Todo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,26 +18,22 @@ public class TodoServiceImpl implements TodoService{
 
 	@Override
 	public int insertTodo(Todo todo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return todoDAO.insertTodo(todo);
 	}
 
 	@Override
 	public int deleteTodo(int todoNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return todoDAO.deleteTodo(todoNo);
 	}
 
 	@Override
 	public int updateTodo(Todo todo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return todoDAO.updateTodo(todo);
 	}
 
 	@Override
 	public ArrayList<Todo> myTodoList(int memberNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return todoDAO.myTodoList(memberNo);
 	}
 
 }

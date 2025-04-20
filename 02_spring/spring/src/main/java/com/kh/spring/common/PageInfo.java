@@ -1,8 +1,12 @@
 package com.kh.spring.common;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
+@Data
 @Getter
+@Setter
 public class PageInfo {
 	/**
 	 * ===== 페이징 처리를 위한 준비작업 =====
@@ -80,4 +84,15 @@ public class PageInfo {
 	// 만약에, 마지막 페이지번호(maxPage)가 13이라면...? 끝번호도 13으로 저장해야 함
 	this.endPage = endPage > maxPage ? maxPage : endPage;
 	}
+
+	public int getCurrPage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getBoardLimit() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

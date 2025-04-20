@@ -1,9 +1,9 @@
-package com.kh.todo.service;
+package com.kh.todo.todoList.service;
 
 import java.util.ArrayList;
 
 import com.kh.todo.member.model.vo.Member;
-import com.kh.todo.model.vo.Todo;
+import com.kh.todo.todoList.model.vo.Todo;
 
 public interface TodoService {
 	

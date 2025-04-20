@@ -1,10 +1,10 @@
-package com.kh.todo.model.dao;
+package com.kh.todo.todoList.model.dao;
 
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.kh.todo.model.vo.Todo;
+import com.kh.todo.todoList.model.vo.Todo;
 
 @Mapper
 public interface TodoDAO {

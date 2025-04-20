@@ -34,8 +34,7 @@ public interface BoardService {
 	
 	/* 게시글 조회 수 증가 U */
 	int increaseCount(int boardNo);
-	
-	/* top 5 조회*/
+
 	ArrayList<Board> selectTopFiveList();
 	
 }

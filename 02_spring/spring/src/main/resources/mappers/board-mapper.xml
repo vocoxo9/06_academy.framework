@@ -18,14 +18,7 @@
 		 	<if test="condition == 'content'">
 		 		AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
 		 	</if>
-		<choose>	
-			<when test="orderby == 'count'">
-				ORDER BY COUNT DESC
-			</when>
-			<otherwise>
-				ORDER BY BOARD_NO DESC
-			</otherwise>
-		</choose>
+		ORDER BY BOARD_NO DESC
 	</select>
 
 	<select id="selectBoardCount" resultType="_int">
@@ -50,60 +43,9 @@
 		VALUES(SEQ_BNO.NEXTVAL, #{boardTitle}, #{boardWriter}, #{boardContent}, #{originName}, #{changeName})
 	</insert>
 	
-	
-	<resultMap id="boardResultMap" type="Board">
-		<result column="BOARD_NO" property="boardNo" />
-		<result column="BOARD_TITLE" property="boardTitle" />
-		<result column="board_writer" property="boardWriter" />
-		<result column="BOARD_CONTENT" property="boardContent" />
-		<result column="origin_name" property="originName" />
-		<result column="CHANGE_NAME" property="changeName" />
-		<result column="COUNT" property="count" />
-		<result column="CREATE_DATE" property="createDate" />
-		<result column="STATUS" property="status" />
-	</resultMap>
-	
-	<select id="selectBoardDetail" resultMap="boardResultMap">
+	<select id="selectBoardDetail" resultType="Board">
 		SELECT *
 		FROM BOARD
 		WHERE BOARD_NO = #{boardNo} AND STATUS = 'Y'
-	</select>
-	
-	<update id="increaseCount">
-		UPDATE BOARD SET COUNT = COUNT + 1 WHERE BOARD_NO = #{boardNo}
-	</update>
-	
-	<select id="selectReplyList" resultType="Reply">
-		SELECT REPLY_NO, REPLY_CONTENT, REPLY_WRITER, CREATE_DATE
-		FROM REPLY WHERE REF_BNO = #{boardNo}
-		AND STATUS = 'Y'
-		ORDER BY REPLY_NO DESC
-	</select>
-	
-	<update id="deleteBoard">
-		UPDATE BOARD
-		SET STATUS = 'N'
-		WHERE BOARD_NO = #{boardNo}
-	</update>
-	
-	<update id="updateBoard">
-		UPDATE BOARD
-		SET BOARD_TITLE = #{boardTitle},
-			BOARD_CONTENT = #{boardContent},
-			ORIGIN_NAME = #{originName},
-			CHANGE_NAME = #{changeName},
-			CREATE_DATE = SYSDATE
-		WHERE BOARD_NO = #{boardNo} AND STATUS = 'Y'
-	</update>
-	
-	<insert id="insertReply">
-		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER) 
-			VALUES(SEQ_RNO.NEXTVAL, #{replyContent}, #{refBno}, #{replyWriter})
-	</insert>
-	
-	<select id="selectTopFiveList" resultType="Board">
-		SELECT *
-		FROM (SELECT * FROM BOARD ORDER BY COUNT DESC)
-		WHERE ROWNUM &lt;= 5
 	</select>
 </mapper>

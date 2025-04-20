@@ -8,7 +8,7 @@
 
 
 	<select id="selectMember">
-		SELECT * FROM TB_MEMBER WHERE ID = #{id} AND PASSWORD = #{password}
+		SELECT * FROM TB_MEMBER WHERE ID = #{id} <!-- AND  PASSWORD = #{password} -->
 	</select>
 	
 	<insert id="insertMember">
