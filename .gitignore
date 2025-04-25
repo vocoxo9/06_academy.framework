@@ -81,3 +81,5 @@ Servers/
 .gitattributes
 mvnw
 mvnw.cmd
+apitest/
+todo/
