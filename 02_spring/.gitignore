@@ -35,3 +35,4 @@ build/
 # folder
 apitest/
 todo/
+application.properties

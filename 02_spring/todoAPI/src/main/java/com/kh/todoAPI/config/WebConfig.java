@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 public class WebConfig implements WebMvcConfigurer{
 
-	@Value("${client.origins")
+	@Value("${client.origins}")
 	private String origins;
 	
 	@Override

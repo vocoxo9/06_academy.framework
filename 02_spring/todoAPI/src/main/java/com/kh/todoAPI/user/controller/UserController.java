@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.todoAPI.user.service.IdService;
 import com.kh.todoAPI.user.service.MailService;
 
 import jakarta.mail.MessagingException;
@@ -19,6 +20,7 @@ public class UserController {
 	
 	
 	private final MailService mailService;
+	private final IdService idService;
 	
 	/**
 	 * 이메일을 전달받아 인증코드를 메일로 전송
@@ -64,6 +66,23 @@ public class UserController {
 		boolean result = mailService.verifyCode(email, code);
 		
 		return result ? "success" : "failed";
+	}
+	
+	/**
+	 * 아이디 중복체크
+	 * [POST] /checkId
+	 * @param id 아이디
+	 * @return "NNNNN" : 중복된 아이디 / "NNNNY" : 사용 가능한 아이디
+	 */
+	
+	@PostMapping("/checkId")
+	public String checkId(@RequestBody Map<String, Object> requestBody) {
+		String id = (String)requestBody.get("id");
+		
+		// 서비스로부터 중복 체크
+		int result = idService.checkId(id);
+		
+		return result > 0 ? "NNNNN" : "NNNNY";
 	}
 	
 }
