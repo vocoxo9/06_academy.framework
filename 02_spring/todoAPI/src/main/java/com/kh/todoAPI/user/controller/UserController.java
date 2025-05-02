@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins="http://localhost:5173")
 @RestController		// => Controller + ResponseBody
-@RequiredArgsConstructor	// lombok을 이용하여 생성자 주입 처리
+@RequiredArgsConstructor
 public class UserController {
 	
 	
@@ -73,31 +73,28 @@ public class UserController {
 	 * 아이디 중복체크
 	 * [POST] /checkId
 	 * @param id 아이디
-	 * @return "NNNNN" : 중복된 아이디 / "NNNNY" : 사용 가능한 아이디
+	 * @return "NNNNN" : 중복된 아이디, "NNNNY" : 사용 가능한 아이디
 	 */
-	
 	@PostMapping("/checkId")
 	public String checkId(@RequestBody Map<String, Object> requestBody) {
 		String id = (String)requestBody.get("id");
 		
-		// 서비스로부터 중복 체크
+		// 서비스로부터 중복체크 -> 사용자 테이블에서 id에 해당하는 개수를 조회할 것임!
 		boolean result = userService.checkId(id);
 		
 		return result ? "NNNNY" : "NNNNN";
 	}
 	
-	
 	/**
-	 * 회원가입(회원 정보 등록)
-	 * [POST]  /user
-	 * @param UserDTO 회원 정보 {id, pwd, nickname, email} -> 키값에 해당하는 객체로 필드 선언
+	 * 회원가입 (회원 정보 등록)
+	 * [POST] /user
+	 * @param UserDTO 회원 정보 { userId: 아이디, userPwd: 비밀번호, nickname: 닉네임, email: 이메일 }
 	 * @return "success" : 가입 성공, "failed" : 가입 실패
 	 */
 	@PostMapping("user")
-	public String signupUser(@RequestBody UserDTO userDTO) {
-
-		int result = userService.signupUser(userDTO); 
-		
-		return result > 0? "success" : "failed";
+	public String registUser(@RequestBody UserDTO userDto) {
+		int result = userService.signupUser(userDto);		
+		return result > 0 ? "success" : "failed";		
 	}
+	
 }
