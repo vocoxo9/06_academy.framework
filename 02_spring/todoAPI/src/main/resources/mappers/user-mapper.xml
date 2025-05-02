@@ -4,6 +4,12 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 
-<mapper>
-
+<mapper namespace="userMapper">
+	<select id="countById" resultType="_int">
+		SELECT COUNT(*) FROM TODO_USER WHERE ID = #{id}
+	</select>
+	
+	<insert id="signupUser" parameterType="UserDTO">
+		INSERT INTO TODO_USER VALUES (#{id}, #{pwd}, #{nickname}, #{email}, default)
+	</insert>
 </mapper>

@@ -1,0 +1,10 @@
+.container-md {
+    margin-top : 20rem;
+}
+.main-page {
+    margin : auto;
+    text-align: center;
+    border : 1px solid #dfdfdf;
+    border-radius: 0.5rem;
+    padding : 5rem;
+}

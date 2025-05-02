@@ -1,0 +1,28 @@
+.signup-box {
+    text-align: center;
+    border: 1px solid #dfdfdf;
+    border-radius: 0.5rem;
+    margin: auto;
+    margin-top: 15rem;
+    width: 60%;
+    padding : 1rem 0 2rem 0;
+}
+
+.signup-box hr {
+    margin: 2rem;
+}
+
+.signup-box #title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+}
+
+.signup-box label {
+    font-weight: bold;
+}
+
+.signup-box input {
+    margin: auto;
+    width: 70%;
+}

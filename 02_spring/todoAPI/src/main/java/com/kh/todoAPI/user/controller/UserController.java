@@ -7,20 +7,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.todoAPI.user.service.IdService;
+import com.kh.todoAPI.user.model.dto.UserDTO;
 import com.kh.todoAPI.user.service.MailService;
+import com.kh.todoAPI.user.service.UserService;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins="http://localhost:5173")
 @RestController		// => Controller + ResponseBody
-@RequiredArgsConstructor
+@RequiredArgsConstructor	// lombok을 이용하여 생성자 주입 처리
 public class UserController {
 	
 	
 	private final MailService mailService;
-	private final IdService idService;
+	private final UserService userService;
 	
 	/**
 	 * 이메일을 전달받아 인증코드를 메일로 전송
@@ -80,9 +81,23 @@ public class UserController {
 		String id = (String)requestBody.get("id");
 		
 		// 서비스로부터 중복 체크
-		int result = idService.checkId(id);
+		boolean result = userService.checkId(id);
 		
-		return result > 0 ? "NNNNN" : "NNNNY";
+		return result ? "NNNNY" : "NNNNN";
 	}
 	
+	
+	/**
+	 * 회원가입(회원 정보 등록)
+	 * [POST]  /user
+	 * @param UserDTO 회원 정보 {id, pwd, nickname, email} -> 키값에 해당하는 객체로 필드 선언
+	 * @return "success" : 가입 성공, "failed" : 가입 실패
+	 */
+	@PostMapping("user")
+	public String signupUser(@RequestBody UserDTO userDTO) {
+
+		int result = userService.signupUser(userDTO); 
+		
+		return result > 0? "success" : "failed";
+	}
 }
