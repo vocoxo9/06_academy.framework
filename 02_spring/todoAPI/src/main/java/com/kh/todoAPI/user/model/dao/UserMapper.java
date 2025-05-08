@@ -23,7 +23,12 @@ public class UserMapper {
 
 	// 전달된 회원 정보를 DB에 추가 (DML, INSERT)
 	public int signupUser(UserDTO userDto) {
-		int result = sqlSession.insert("userMapper.insertUser", userDto);
+		int result = sqlSession.insert("userMapper.signupUser", userDto);
 		return result;
+	}
+	
+	// 로그인 정보를 기준으로 회원 정보 조회
+	public UserDTO loginUser(UserDTO userDTO) {
+		return sqlSession.selectOne("userMapper.loginUser", userDTO);
 	}
 }

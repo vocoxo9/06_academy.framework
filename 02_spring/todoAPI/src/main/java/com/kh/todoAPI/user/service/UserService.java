@@ -35,8 +35,15 @@ public class UserService {
 		return userMapper.signupUser(userDto);
 	}
 	
-	
-	/* 로그인 */
+	/**
+	 *  로그인
+	 *  @param UserDTO 로그인 정보 (아이디, 비밀번호)
+	 *  @return UserDTO 회원 정보 (아이디, 닉네임, 이메일)
+	*/
+	public UserDTO loginUser(UserDTO userDTO) {
+		return userMapper.loginUser(userDTO);
+		// return userMapper.selectByUserIdAndUserPwd(userDTO); => 클린코드ver
+	}
 	
 	/* 회원 정보 조회 */
 	

@@ -13,4 +13,7 @@
   	INSERT INTO TODO_USER VALUES (#{id}, #{pwd}, #{nickname}, #{email}, default)
   </insert>
   
+  <select id="loginUser" resultType="UserDTO">
+  	SELECT * FROM TODO_USER WHERE ID=#{id} AND PWD=#{pwd}
+  </select>
 </mapper>

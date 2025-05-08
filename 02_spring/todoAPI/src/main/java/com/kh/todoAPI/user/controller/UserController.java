@@ -12,6 +12,7 @@ import com.kh.todoAPI.user.service.MailService;
 import com.kh.todoAPI.user.service.UserService;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins="http://localhost:5173")
@@ -95,6 +96,27 @@ public class UserController {
 	public String registUser(@RequestBody UserDTO userDto) {
 		int result = userService.signupUser(userDto);		
 		return result > 0 ? "success" : "failed";		
+	}
+	
+	/**
+	 * 로그인 (회원 정보 조회)
+	 * [POST] /login
+	 * @param UserDTO 로그인 정보 { id, pwd }
+	 * @return "success" : 로그인 성공, "failed" : 로그인 실패
+	 *  * 로그인 성공 시, 세션에 사용자 정보를 저장
+	 */
+	@PostMapping("/login")
+	public String loginUser(@RequestBody UserDTO userDTO, HttpSession session) {
+		UserDTO loginUser = userService.loginUser(userDTO);
+		
+		System.out.println(loginUser);
+		
+		if (loginUser == null) {
+			return "failed";
+		} else {
+			session.setAttribute("loginUser", loginUser);
+			return "success";
+		}
 	}
 	
 }
