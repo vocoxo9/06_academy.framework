@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="todoMapper">
+	<select id="findAll" resultType="Todo">
+		SELECT NO
+		     , USER_ID userId
+		     , CONTENT
+		     , STATUS
+		     , CREATE_DATE createaDate
+		  FROM TB_TODO
+		 WHERE STATUS = 1
+		 	   AND USER_ID = #{userId}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO TB_TODO
+			   VALUES (SEQ_TNO.NEXTVAL
+			   		, #{userId}
+			   		, #{content}
+			   		, 1
+			   		, DEFAULT)
+	</insert>
+	
+	<select id="selectByMaxNo" resultType="Todo">
+		SELECT NO
+		     , USER_ID
+		     , CONTENT
+		     , STATUS
+		     , CREATE_DATE
+		  FROM TB_TODO
+		  WHERE NO = ( SELECT MAX(NO)
+		  		 		FROM TB_TODO
+		        		WHERE USER_ID = #{userId} AND STATUS = 1 )
+	</select>
+</mapper>
+
+
+
