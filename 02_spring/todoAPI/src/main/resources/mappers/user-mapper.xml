@@ -6,14 +6,14 @@
 <mapper namespace="userMapper">
 
   <select id="countById" resultType="_int">
-    SELECT COUNT(*) FROM TODO_USER WHERE ID = #{id}
+    SELECT COUNT(*) FROM TODO_USER WHERE USER_ID = #{userId}
   </select>
   
   <insert id="signupUser" parameterType="UserDTO">
-  	INSERT INTO TODO_USER VALUES (#{id}, #{pwd}, #{nickname}, #{email}, default)
+  	INSERT INTO TODO_USER VALUES (#{userId}, #{userPwd}, #{nickname}, #{email}, default)
   </insert>
   
   <select id="loginUser" resultType="UserDTO">
-  	SELECT * FROM TODO_USER WHERE ID=#{id} AND PWD=#{pwd}
+  	SELECT USER_ID, USER_PWD, NICKNAME, EMAIL FROM TODO_USER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
   </select>
 </mapper>

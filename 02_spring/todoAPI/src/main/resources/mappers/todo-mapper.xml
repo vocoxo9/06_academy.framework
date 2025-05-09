@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="todoMapper">
+
+	<select id="findAll" resultType="Todo">
+		SELECT TODO_NO, CONTENT, USER_ID FROM TODO_LIST WHERE STATUS = 1
+	</select>
+	
+	<insert id="insertTodo">
+		INSERT INTO TODO_LIST (TODO_NO, CONTENT, USER_ID) VALUES (SEQ_TNO.NEXTVAL, #{content}, #{userId})
+	</insert>
+	
+	<select id="selectByMaxNo" resultType="Todo">
+		SELECT *
+		FROM TODO_LIST
+		WHERE TODO_NO = ( SELECT MAX(TODO_NO) FROM TODO_LIST WHERE USER_ID = #{userId} AND STATUS = 1)
+	</select>
+</mapper>

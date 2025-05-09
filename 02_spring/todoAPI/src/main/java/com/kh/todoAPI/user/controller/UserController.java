@@ -108,7 +108,7 @@ public class UserController {
 	@PostMapping("/login")
 	public String loginUser(@RequestBody UserDTO userDTO, HttpSession session) {
 		UserDTO loginUser = userService.loginUser(userDTO);
-		
+		System.out.println(userDTO);
 		System.out.println(loginUser);
 		
 		if (loginUser == null) {

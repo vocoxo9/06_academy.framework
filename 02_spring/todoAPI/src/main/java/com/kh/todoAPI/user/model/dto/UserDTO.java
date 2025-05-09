@@ -7,8 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserDTO {
 
-	private String id;
-	private String pwd;
+	private String userId;
+	private String userPwd;
 	private String nickname;
 	private String email;
 }
