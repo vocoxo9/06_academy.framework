@@ -18,7 +18,7 @@ import com.kh.opendata.model.vo.AirVO;
 @Service
 public class APIService {
 
-	private static final String SERVICE_KEY = "6ts24t1asdIdIcsFCu%2BLKytanC50N5KMlMorvtTVVJre1sD6hwAPbkYt1BXjteTdaooJb0vB0ocyXk1BicepqA%3D%3D";
+	private static final String SERVICE_KEY = "서비스키";
 	
 	/**
 	 * 공공데이터 API를 사용하여 대기오염 정보 조회
