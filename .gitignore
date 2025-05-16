@@ -82,3 +82,4 @@ Servers/
 mvnw
 mvnw.cmd
 **/application.properties
+.idea/
