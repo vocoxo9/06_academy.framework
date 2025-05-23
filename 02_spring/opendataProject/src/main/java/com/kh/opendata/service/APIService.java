@@ -247,7 +247,7 @@ public class APIService {
 		if (urlConn.getResponseCode() == HttpServletResponse.SC_OK) {
 			return responseData.toString();
 		} else {
-			System.out.println(responseData);		// 오류 내용 출력. log.error(..)
+//			System.out.println(responseData);		// 오류 내용 출력. log.error(..)
 			return null;
 		}
 	}
