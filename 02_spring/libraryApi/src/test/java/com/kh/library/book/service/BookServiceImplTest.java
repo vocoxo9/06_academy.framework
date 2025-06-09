@@ -90,14 +90,23 @@ class BookServiceImplTest {
 		// * Then
 		assertNull(book);
 	}
+	
 	@Test
+	@DisplayName("도서 목록 추가 테스트")
 	void testAddBook() {
-		fail("Not yet implemented");
+		Book book = new Book("test1", "test1", "com.kh");
+		
+		int result = bookService.addBook(book);
+		
+		assertTrue(result == 1);
 	}
 
 	@Test
+	@DisplayName("도서 목록 업데이트 테스트")
 	void testUpdateBook() {
-		fail("Not yet implemented");
+		Book updateBook = new Book();
+		int result = bookService.updateBook(updateBook);
+		assertTrue(result == 1);
 	}
 
 	@Test

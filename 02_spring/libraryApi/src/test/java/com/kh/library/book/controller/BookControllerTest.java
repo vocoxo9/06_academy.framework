@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.google.gson.Gson;
 import com.kh.library.book.model.vo.Book;
 import com.kh.library.book.service.BookService;
+import com.kh.library.common.model.dto.SearchParams;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,7 +68,9 @@ class BookControllerTest {
 
 	@Test
 	void testGetBooks() {
-		fail("Not yet implemented");
+		SearchParams params = new SearchParams();
+		
+		
 	}
 	
 	@Test
