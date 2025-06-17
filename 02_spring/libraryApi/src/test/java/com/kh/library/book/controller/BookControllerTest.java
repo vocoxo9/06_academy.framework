@@ -2,11 +2,10 @@ package com.kh.library.book.controller;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -67,8 +66,14 @@ class BookControllerTest {
 	}
 
 	@Test
-	void testGetBooks() {
+	@DisplayName("도서 정보 조회 요청 테스트")
+	void testGetBooks() throws Exception {
 		SearchParams params = new SearchParams();
+		mockMvc.perform(get("/books")
+				.param("keyword", "")
+				.param("filter", "")
+				)
+		.andExpect(status().isOk());
 		
 		
 	}
